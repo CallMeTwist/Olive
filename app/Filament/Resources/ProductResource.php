@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
+use App\Models\Category;
 use App\Models\Product;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -12,6 +13,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Str;
 
 class ProductResource extends Resource
 {
@@ -36,6 +38,33 @@ class ProductResource extends Resource
 
                 Forms\Components\Section::make('Product Information')
                     ->schema([
+                        Forms\Components\Select::make('category_id')
+                            ->relationship('category', 'name')
+                            ->required()
+                            ->searchable()
+                            ->preload()
+                            ->createOptionForm([
+                                Forms\Components\TextInput::make('name')
+                                    ->required()
+                                    ->label('Category Name')
+                                    ->maxLength(255)
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(fn ($state, Forms\Set $set) =>
+                                    $set('slug', Str::slug($state))
+                                    ),
+
+                                Forms\Components\TextInput::make('slug')
+                                    ->label('Category Slug')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->helperText('Auto-generated from name, but you can edit it')
+                                    ->disabled(fn ($operation) => $operation === 'create')  // Auto-filled on create
+                                    ->dehydrated(),  // Ensure it saves even when disabled
+                            ])
+                            ->createOptionUsing(function (array $data) {
+                                return Category::create($data)->id;
+                            }),
+
                         Forms\Components\TextInput::make('title')
                             ->required()
                             ->maxLength(255),
@@ -71,7 +100,6 @@ class ProductResource extends Resource
                                     ->image()
                                     ->disk('public')
                                     ->visibility('public')
-                                    ->storeFileNamesIn('original_filename')
                                     ->required()
                                     ->imageEditor()
                                     ->imageEditorAspectRatios([
@@ -117,7 +145,20 @@ class ProductResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->groups([
+                Tables\Grouping\Group::make('category.name')
+                    ->label('Category')
+                    ->collapsible()
+                    ->titlePrefixedWithLabel(false),
+            ])
+            ->defaultGroup('category.name')
             ->columns([
+//                Tables\Columns\TextColumn::make('category.name')
+//                    ->searchable()
+//                    ->sortable()
+//                    ->badge()
+//                    ->color('info'),
+
                 Tables\Columns\ImageColumn::make('primaryImage.path')
                     ->label('Image')
                     ->getStateUsing(fn ($record) => $record->primaryImage ? asset('storage/' . $record->primaryImage->path) : null)
@@ -154,6 +195,17 @@ class ProductResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
+                Tables\Filters\SelectFilter::make('category_id')
+                    ->label('Category')
+                    ->relationship('category', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->indicateUsing(function ($state) {
+                        if (!$state) return null;
+                        $category = \App\Models\Category::where('id', $state)->first();
+                        return $category ? 'Category: ' . $category->name : null;
+                    }),
+
                 Tables\Filters\TernaryFilter::make('is_active')
                     ->label('Active Products'),
 
