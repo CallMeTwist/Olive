@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Veppo - Modern jewelry bootstrap eCommerce html template</title>
-    <meta name="description" content="Veppo is a sleek, modern jewelry eCommerce HTML template built with Bootstrap. Perfect for luxury brands, boutiques & online stores.">
+    <title>Olive</title>
+    <meta name="description" content="A quality jewelry">
     <meta name="keywords" content="jewelry, eCommerce, bootstrap, HTML template, luxury, fashion, rings, bracelets, necklaces, shop">
     <meta name="author" content="spacingtech_webify">
     <!-- favicon -->

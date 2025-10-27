@@ -55,8 +55,21 @@
 /*====================================
     google font
 ====================================*/
-@import url('../../../../../css2');
-@import url('../../../../../css2-1');
+/*@import url('../../../../../css2');*/
+/*@import url('../../../../../css2-1');*/
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+/* Body and headings */
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap');
+
+/* Section headings */
+@import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;600;700&display=swap');
+
+/* Accent / signature-style font (replacement for Holligate Signature Demo) */
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+
+
 
 /*====================================
     other font
@@ -221,7 +234,7 @@
 .secondary-btn:hover {
     color: var(--extra-font-color);
     background-color: var(--secondary-font-color);
-    border-color: var(--secondary-font-color);    
+    border-color: var(--secondary-font-color);
 }
 .tertiary-btn {
     color: var(--extra-font-color);
@@ -2475,7 +2488,7 @@ label.cust-switch-label input:checked ~ span.cust-switch-slide::before {
 /*====================================
     hoverEffect keyframes css
 ====================================*/
-@-webkit-keyframes hoverEffect { 
+@-webkit-keyframes hoverEffect {
     0% {
         opacity: 1;
         -webkit-transform: scale(0.1);
