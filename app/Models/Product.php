@@ -6,10 +6,27 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
     protected $guarded = [];
+
+    protected $casts = [
+        'available_sizes' => 'array',
+        'is_active' => 'boolean',
+    ];
+
+    protected static function booted()
+    {
+        static::creating(function ($product) {
+            do {
+                $sku = 'PRT-' . strtoupper(Str::random(8));
+            } while (self::where('sku', $sku)->exists());
+
+            $product->sku = $sku;
+        });
+    }
 
     public function images(): HasMany
     {

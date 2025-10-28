@@ -88,6 +88,28 @@ class ProductResource extends Resource
                         Forms\Components\Toggle::make('is_active')
                             ->label('Active')
                             ->default(true),
+
+                        Forms\Components\TextInput::make('sku')
+                            ->label('Product Code (SKU)')
+                            ->disabled()
+                            ->dehydrated() // still save to DB
+                            ->maxLength(50)
+                            ->helperText('Automatically generated when you create a product'),
+
+                        Forms\Components\TextInput::make('old_price')
+                            ->label('Old Price')
+                            ->numeric()
+                            ->prefix('₦')
+                            ->step(0.01)
+                            ->helperText('Optional: previous price for discount display'),
+
+                        Forms\Components\TagsInput::make('available_sizes')
+                            ->label('Available Sizes')
+                            ->placeholder('Add sizes like 16cm, 18cm, 20cm')
+                            ->helperText('Leave empty if not applicable')
+                            ->splitKeys([',', 'Enter'])
+                            ->suggestions(['16cm', '18cm', '20cm']),
+
                     ])->columns(2),
 
                 Forms\Components\Section::make('Product Images')

@@ -15,6 +15,6 @@ Route::get('/contact', [WebsiteController::class, 'contact'])->name('contact');
 // Store
 Route::prefix('store')->name('store.')->group(function () {
     Route::get('/', [StoreController::class, 'index'])->name('index');
-    Route::get('/products/{product:slug}', [StoreController::class, 'show'])->name('products.show');
+    Route::get('/{product:slug}', [StoreController::class, 'show'])->name('product.show');
 });
 

@@ -20,6 +20,7 @@
     <!-- collection css -->
     <link rel="stylesheet" type="text/css" href="/assets/css/collection.css">
     <link rel="stylesheet" type="text/css" href="/assets/css/collection2.css">
+    @stack('styles')
     <link rel="stylesheet" type="text/css" href="/assets/css/style2.css">
 
     <!-- blog css -->
