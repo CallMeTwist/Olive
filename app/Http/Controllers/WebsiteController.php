@@ -8,7 +8,7 @@ class WebsiteController extends Controller
 {
     public function index(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
-        return view('website.index');
+        return view('website.welcome');
     }
 
     public function about()

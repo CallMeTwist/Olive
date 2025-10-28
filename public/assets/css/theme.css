@@ -56,8 +56,9 @@
 /*====================================
     google font
 ====================================*/
-@import url('../../../../../css2-2');
-@import url('../../../../../css2-3');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
+
 /************************************* font end *************************************/
 
 /************************************* root start *************************************/
@@ -89,15 +90,15 @@
     --section-heading-font-line-height: 1.11;
 
     /* paragraph */
-    --paragraph-font-line-height: 25px; 
+    --paragraph-font-line-height: 25px;
 
     /* general color */
-    --dominant-font-color: #a5886c;
+    --dominant-font-color: #8c8e63;
     --secondary-font-color: #333333;
     --extra-font-color: #ffffff;
     --extra-bgcolor: #ffffff;
     --product-new-sale-label-bgcolor: #333333;
-    --product-discount-label-bgcolor: #a5886c;
+    --product-discount-label-bgcolor: #e54747;
     --product-sold-label-bgcolor: #b02b28;
     --product-review-color: #ffa500;
 
@@ -207,7 +208,7 @@
 .secondary-btn:hover {
     color: var(--extra-font-color);
     background-color: var(--secondary-font-color);
-    border-color: var(--secondary-font-color);    
+    border-color: var(--secondary-font-color);
 }
 .tertiary-btn {
     color: var(--extra-font-color);
@@ -2507,7 +2508,7 @@ label.cust-switch-label input:checked ~ span.cust-switch-slide::before {
 /*====================================
     hoverEffect keyframes css
 ====================================*/
-@-webkit-keyframes hoverEffect { 
+@-webkit-keyframes hoverEffect {
     0% {
         opacity: 1;
         -webkit-transform: scale(0.1);

@@ -14,14 +14,18 @@
     <link rel="stylesheet" type="text/css" href="/assets/css/plugin.css">
     <!-- theme css -->
     <link rel="stylesheet" type="text/css" href="/assets/css/theme2.css">
-    <!-- collection css -->
-    <link rel="stylesheet" type="text/css" href="/assets/css/collection2.css">
-    <!-- blog css -->
+    <!-- theme css -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/theme.css">
     <link rel="stylesheet" type="text/css" href="/assets/css/blog2.css">
-    <!-- style css -->
+    <!-- collection css -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/collection.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/collection2.css">
     <link rel="stylesheet" type="text/css" href="/assets/css/style2.css">
+
+    <!-- blog css -->
+
 </head>
-<body>
+<body class="@stack('body-class')">
 <!-- preloader start -->
 <div class="preloader position-fixed top-0 start-0 w-100 h-100 body-bg z-index-5">
     <div class="loader-img position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
@@ -114,7 +118,7 @@
                             <div class="main-wrap">
                                 <ul class="menu-ul d-flex flex-wrap">
                                     <li class="menu-li">
-                                        <a href="index.html" class="menu-link font-16 d-flex align-items-center plr-10 plr-xxl-15">
+                                        <a href="/" class="menu-link font-16 d-flex align-items-center plr-10 plr-xxl-15">
                                             <span class="menu-title text-uppercase heading-weight">Home</span>
                                         </a>
                                     </li>
@@ -124,7 +128,7 @@
                                         </a>
                                     </li>
                                     <li class="menu-li">
-                                        <a href="collection.html" class="menu-link font-16 d-flex align-items-center plr-10 plr-xxl-15">
+                                        <a href={{route('store.index')}} class="menu-link font-16 d-flex align-items-center plr-10 plr-xxl-15">
                                             <span class="menu-title text-uppercase heading-weight">Store</span>
                                             <span class="icon-16 fw-normal"><i class="ri-arrow-down-s-line d-block lh-1"></i></span>
                                         </a>
@@ -302,6 +306,9 @@
     <!-- header-top end -->
 </header>
 <!-- header end -->
+<!-- breadcrumb-area start -->
+@yield('breadcrumb')
+<!-- breadcrumb-area end -->
 <!-- main start -->
 <main id="main">
     @yield('content')
@@ -1502,6 +1509,8 @@
 <!-- plugin js -->
 <script src="/assets/js/plugin.js"></script>
 <!-- theme js -->
-<script src="/assets/js/theme2.js"></script>
+
+<!-- theme js -->
+<script src="assets/js/theme.js"></script>
 </body>
 </html>
