@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <base href="{{ asset('') }}">
     <title>Olive</title>
     <meta name="description" content="A quality jewelry">
     <meta name="keywords" content="jewelry, eCommerce, bootstrap, HTML template, luxury, fashion, rings, bracelets, necklaces, shop">
@@ -1508,10 +1509,10 @@
 <a href="javascript:void(0)" id="top" class="icon-16 secondary-btn position-fixed width-32 height-32 d-flex align-items-center justify-content-center z-1 opacity-0 invisible border-radius" aria-label="Back to top"><i class="ri-arrow-up-line d-block lh-1"></i></a>
 <!-- back-to-top end -->
 <!-- plugin js -->
-<script src="/assets/js/plugin.js"></script>
+<script src="{{asset('/assets/js/plugin.js')}}"></script>
 <!-- theme js -->
 
 <!-- theme js -->
-<script src="assets/js/theme.js"></script>
+<script src="{{asset('/assets/js/theme.js')}}"></script>
 </body>
 </html>

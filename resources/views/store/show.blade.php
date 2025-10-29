@@ -7,9 +7,9 @@
 
 
 @section('breadcrumb')
-    <div class="breadcrumb-area ptb-15" data-bgimg="assets/image/other/breadcrumb-bgimg.jpg">
+    <div class="breadcrumb-area ptb-15" data-bgimg="{{asset('/assets/image/other/breadcrumb-bgimg.jpg')}}">
         <div class="container">
-            <span class="d-block extra-color"><a href="index.html" class="extra-color">Home</a> / </span>
+            <span class="d-block extra-color"><a href="index.html" class="extra-color">Home</a> / {{$product->title}} </span>
         </div>
     </div>
 @endsection
@@ -36,37 +36,24 @@
                                 <div class="product-img-big slider-big-h position-relative br-hidden">
                                     <div class="swiper" id="slider-big-h">
                                         <div class="swiper-wrapper product-swiper-wrapper">
-                                            <div class="swiper-slide product-swiper-slide">
-                                                <div class="product-item-img position-relative">
-                                                    <a href="/assets/image/product/p-1.jpg" class="full-view product-thumbnail heading-color position-absolute top-0 end-0 width-40 height-40 d-flex align-items-center justify-content-center body-bg z-1 mst-15 mer-15 rounded-circle box-shadow" aria-label="Image full view"><i class="ri-fullscreen-line d-block lh-1"></i></a>
-                                                    <img src="/assets/image/product/p-1.jpg" data-zoom="assets/image/product/p-1.jpg" class="w-100 img-fluid zoom" alt="p-1">
+                                            @foreach ($product->images as $image)
+                                                <div class="swiper-slide product-swiper-slide">
+                                                    <div class="product-item-img position-relative">
+                                                        <a href="{{ asset('storage/' . $image->path) }}"
+                                                           class="full-view product-thumbnail heading-color position-absolute top-0 end-0 width-40 height-40 d-flex align-items-center justify-content-center body-bg z-1 mst-15 mer-15 rounded-circle box-shadow"
+                                                           aria-label="Image full view">
+                                                            <i class="ri-fullscreen-line d-block lh-1"></i>
+                                                        </a>
+
+                                                        <img src="{{ asset('storage/' . $image->path) }}"
+                                                             data-zoom="{{ asset('storage/' . $image->path) }}"
+                                                             class="w-100 img-fluid zoom"
+                                                             alt="{{ $product->title }}">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="swiper-slide product-swiper-slide">
-                                                <div class="product-item-img position-relative">
-                                                    <a href="assets/image/product/p-2.jpg" class="full-view product-thumbnail heading-color position-absolute top-0 end-0 width-40 height-40 d-flex align-items-center justify-content-center body-bg z-1 mst-15 mer-15 rounded-circle box-shadow" aria-label="Image full view"><i class="ri-fullscreen-line d-block lh-1"></i></a>
-                                                    <img src="assets/image/product/p-2.jpg" data-zoom="assets/image/product/p-2.jpg" class="w-100 img-fluid zoom" alt="p-2">
-                                                </div>
-                                            </div>
-                                            <div class="swiper-slide product-swiper-slide">
-                                                <div class="product-item-img position-relative">
-                                                    <a href="assets/image/product/p-3.jpg" class="full-view product-thumbnail heading-color position-absolute top-0 end-0 width-40 height-40 d-flex align-items-center justify-content-center body-bg z-1 mst-15 mer-15 rounded-circle box-shadow" aria-label="Image full view"><i class="ri-fullscreen-line d-block lh-1"></i></a>
-                                                    <img src="assets/image/product/p-3.jpg" data-zoom="assets/image/product/p-3.jpg" class="w-100 img-fluid zoom" alt="p-3">
-                                                </div>
-                                            </div>
-                                            <div class="swiper-slide product-swiper-slide">
-                                                <div class="product-item-img position-relative">
-                                                    <a href="assets/image/product/p-4.jpg" class="full-view product-thumbnail heading-color position-absolute top-0 end-0 width-40 height-40 d-flex align-items-center justify-content-center body-bg z-1 mst-15 mer-15 rounded-circle box-shadow" aria-label="Image full view"><i class="ri-fullscreen-line d-block lh-1"></i></a>
-                                                    <img src="assets/image/product/p-4.jpg" data-zoom="assets/image/product/p-4.jpg" class="w-100 img-fluid zoom" alt="p-4">
-                                                </div>
-                                            </div>
-                                            <div class="swiper-slide product-swiper-slide">
-                                                <div class="product-item-img position-relative">
-                                                    <a href="assets/image/product/p-5.jpg" class="full-view product-thumbnail heading-color position-absolute top-0 end-0 width-40 height-40 d-flex align-items-center justify-content-center body-bg z-1 mst-15 mer-15 rounded-circle box-shadow" aria-label="Image full view"><i class="ri-fullscreen-line d-block lh-1"></i></a>
-                                                    <img src="assets/image/product/p-5.jpg" data-zoom="assets/image/product/p-5.jpg" class="w-100 img-fluid zoom" alt="p-5">
-                                                </div>
-                                            </div>
+                                            @endforeach
                                         </div>
+
                                     </div>
                                     <div class="swiper-buttons">
                                         <button type="button" class="swiper-prev swiper-prev-big secondary-btn icon-16 width-40 height-40 position-absolute top-50 translate-middle-y z-1 rounded-circle" aria-label="Arrow previous"><i class="ri-arrow-left-line d-block lh-1"></i></button>
@@ -80,42 +67,19 @@
                                 <div class="product-img-small slider-small-h">
                                     <div class="swiper" id="slider-small-h">
                                         <div class="swiper-wrapper">
-                                            <div class="swiper-slide product-swiper-slide">
-                                                <div class="product-item-img br-hidden">
-                                                    <a href="javascript:void(0)" class="d-block product-thumbnail">
-                                                        <img src="assets/image/product/p-1.jpg" class="w-100 img-fluid" alt="p-1">
-                                                    </a>
+                                            @foreach ($product->images as $image)
+                                                <div class="swiper-slide product-swiper-slide">
+                                                    <div class="product-item-img br-hidden">
+                                                        <a href="javascript:void(0)" class="d-block product-thumbnail">
+                                                            <img src="{{ asset('storage/' . $image->path) }}"
+                                                                 class="w-100 img-fluid"
+                                                                 alt="{{ $product->title }}">
+                                                        </a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="swiper-slide product-swiper-slide">
-                                                <div class="product-item-img br-hidden">
-                                                    <a href="javascript:void(0)" class="d-block product-thumbnail">
-                                                        <img src="assets/image/product/p-2.jpg" class="w-100 img-fluid" alt="p-2">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="swiper-slide product-swiper-slide">
-                                                <div class="product-item-img br-hidden">
-                                                    <a href="javascript:void(0)" class="d-block product-thumbnail">
-                                                        <img src="assets/image/product/p-3.jpg" class="w-100 img-fluid" alt="p-3">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="swiper-slide product-swiper-slide">
-                                                <div class="product-item-img br-hidden">
-                                                    <a href="javascript:void(0)" class="d-block product-thumbnail">
-                                                        <img src="assets/image/product/p-4.jpg" class="w-100 img-fluid" alt="p-4">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="swiper-slide product-swiper-slide">
-                                                <div class="product-item-img br-hidden">
-                                                    <a href="javascript:void(0)" class="d-block product-thumbnail">
-                                                        <img src="assets/image/product/p-5.jpg" class="w-100 img-fluid" alt="p-5">
-                                                    </a>
-                                                </div>
-                                            </div>
+                                            @endforeach
                                         </div>
+
                                     </div>
                                 </div>
                                 <!-- product-img-small end -->
