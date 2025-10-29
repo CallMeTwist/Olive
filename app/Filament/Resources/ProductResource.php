@@ -125,10 +125,14 @@ class ProductResource extends Resource
                                     ->required()
                                     ->imageEditor()
                                     ->imageEditorAspectRatios([
-                                        '1:1',
-                                        '4:3',
+                                        '1:1'
                                     ])
-                                ,
+
+                            ->imageCropAspectRatio('1:1')
+                            ->imageResizeTargetWidth('800')
+                            ->imageResizeTargetHeight('800')
+                            ->imageResizeMode('cover')
+                            ->maxSize(5120), // 2MB max
 
 
                                 Forms\Components\TextInput::make('position')

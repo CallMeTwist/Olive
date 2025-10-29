@@ -41,20 +41,20 @@
     transform: scale(1.05);
 }
 
-/* Product actions overlay */
-.single-product .product-action {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 2;
-}
+/*!* Product actions overlay *!*/
+/*.single-product .product-action {*/
+/*    position: absolute;*/
+/*    bottom: 10px;*/
+/*    left: 50%;*/
+/*    transform: translateX(-50%);*/
+/*    opacity: 0;*/
+/*    transition: opacity 0.3s ease;*/
+/*    z-index: 2;*/
+/*}*/
 
-.single-product .product-image:hover .product-action {
-    opacity: 1;
-}
+/*.single-product .product-image:hover .product-action {*/
+/*    opacity: 1;*/
+/*}*/
 
 /* Ensure consistent card heights */
 .single-product {

@@ -356,7 +356,7 @@
                     <div class="col-12 col-lg-3">
                         <div class="footer-theme-logo text-center text-lg-start">
                             <a href="index.html" class="d-inline-block theme-logo">
-                                <img src="assets/image/index2/logo.png" class="width-96 width-xl-144 img-fluid" alt="logo">
+                                <img src="/assets/image/index2/logo.png" class="width-96 width-xl-144 img-fluid" alt="logo">
                             </a>
                         </div>
                     </div>
@@ -1030,7 +1030,7 @@
                     <li class="menu-li bst">
                         <div class="menu-btn d-flex flex-row-reverse">
                             <button type="button" class="width-48 icon-16 ptb-10 bsl" data-bs-toggle="collapse" data-bs-target="#menu-home" aria-expanded="false" aria-label="Menu accordion"><i class="ri-add-line d-block lh-1"></i></button>
-                            <span class="width-calc-48 ptb-10 plr-15"><a href="index.html" class="d-inline-block body-color">Home</a></span>
+                            <span class="width-calc-48 ptb-10 plr-15"><a href="/" class="d-inline-block body-color">Home</a></span>
                         </div>
                     </li>
                     <li class="menu-li bst">
