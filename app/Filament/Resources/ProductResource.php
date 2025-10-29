@@ -110,6 +110,13 @@ class ProductResource extends Resource
                             ->splitKeys([',', 'Enter'])
                             ->suggestions(['16cm', '18cm', '20cm']),
 
+                        Forms\Components\DateTimePicker::make('sale_ends_at')
+                            ->label('Sale Ends At')
+                            ->helperText('Set when the sale for this product ends.')
+                            ->seconds(false)
+                            ->nullable()
+                            ->default(null),
+
                     ])->columns(2),
 
                 Forms\Components\Section::make('Product Images')

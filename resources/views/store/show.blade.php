@@ -3,6 +3,7 @@
 
 @push('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/product.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/store-custom.css') }}">
 @endpush
 
 
@@ -93,71 +94,70 @@
                     <div class="product-detail-info psl-xxl-10">
                         <div class="product-info" data-animate="animate__fadeIn">
                             <div class="product-sku">
-                                <span class="font-14 text-uppercase">SKU-RT89GT</span>
+                                <span class="font-14 text-uppercase">SKU-{{ $product->sku ?? 'N/A' }}</span>
                             </div>
                         </div>
                         <div class="product-info mst-5" data-animate="animate__fadeIn">
                             <div class="product-title">
-                                <h2 class="font-24">Gleam band</h2>
+                                <h2 class="font-24">{{ $product->title }}</h2>
                             </div>
                         </div>
+                        @php
+                            $oldPrice = $product->old_price ?? null;
+                            $newPrice = $product->price;
+                            $discount = $oldPrice && $oldPrice > 0
+                                ? round((($oldPrice - $newPrice) / $oldPrice) * 100)
+                                : 0;
+                        @endphp
                         <div class="product-info mst-15" data-animate="animate__fadeIn">
                             <div class="product-price">
                                 <div class="price-box font-20">
-                                    <span class="new-price dominant-color heading-weight">$79.00</span>
-                                    <span class="old-price heading-weight"><span class="mer-3">~</span><span class="text-decoration-line-through">$89.00</span></span>
-                                    <span class="discount-price secondary-color">-11% off</span>
+                                    <span class="new-price dominant-color heading-weight">${{ number_format($newPrice, 2) }}</span>
+                                    @if ($oldPrice)
+                                        <span class="old-price heading-weight">
+											<span class="mer-3">~</span>
+											<span class="text-decoration-line-through">${{ number_format($oldPrice, 2) }}</span>
+										</span>
+                                        <span class="discount-price secondary-color">-{{ $discount }}% off</span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
-                        <div class="product-info mst-20" data-animate="animate__fadeIn">
-                            <div class="product-ratting">
-                                <div class="pro-review-write">
-                                    <div class="pro-review">
-                                                <span class="review-ratting">
-                                                    <span class="review-star icon-16">
-                                                        <i class="ri-star-fill"></i>
-                                                        <i class="ri-star-fill"></i>
-                                                        <i class="ri-star-fill"></i>
-                                                        <i class="ri-star-fill"></i>
-                                                        <i class="ri-star-line"></i>
-                                                    </span>
-                                                    <span class="review-caption">2 reviews</span>
-                                                </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-info mst-20" data-animate="animate__fadeIn">
-                            <div class="product-view">
-                                <span class="heading-color"><i class="ri-eye-line icon-16 mer-4 blinking"></i><span class="product-live-visitor"></span> people are viewing this product right now</span>
-                            </div>
-                        </div>
+
+
                         <div class="product-info mst-15" data-animate="animate__fadeIn">
                             <div class="product-availability">
-                                <span class="d-inline-block text-success"><span class="heading-color heading-weight mer-10">Availability:</span>In stock</span>
+                                @if ($product->stock > 0)
+                                    <span class="d-inline-block text-success">
+										<span class="heading-color heading-weight mer-10">Availability:</span>In stock
+									</span>
+                                @else
+                                    <span class="d-inline-block text-danger">
+										<span class="heading-color heading-weight mer-10">Availability:</span>Out of stock
+                                    </span>
+                                @endif
                             </div>
                         </div>
+                        @if ($product->stock > 0)
                         <div class="product-info mst-15" data-animate="animate__fadeIn">
                             <div class="product-stock">
-                                <span class="d-inline-block stock-fill text-success ptb-10 plr-15 bg-success heading-weight border-success border-radius">Hurry up! only <span class="available-stock">66</span> products left in stock!</span>
+                                <span class="d-inline-block stock-fill text-success ptb-10 plr-15 bg-success heading-weight border-success border-radius">
+									Hurry up! only <span class="available-stock">{{ $product->stock }}</span> products left in stock!
+									</span>
                             </div>
                         </div>
-                        <div class="product-info mst-15" data-animate="animate__fadeIn">
-                            <div class="product-sold">
-                                <span class="text-danger"><i class="ri-fire-line icon-16 mer-4 blinking"></i><span class="heading-weight"><span class="product-sold-count"></span> products sold in last <span class="product-hours-count"></span> hours</span></span>
-                            </div>
-                        </div>
+                        @endif
                         <div class="product-info mst-25" data-animate="animate__fadeIn">
                             <div class="product-border bst"></div>
                         </div>
                         <div class="product-info mst-20" data-animate="animate__fadeIn">
                             <div class="product-desc">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                                <p>{{ $product->description ?? 'No description available.' }}</p>
                             </div>
                         </div>
+                        @if ($product->sale_ends_at)
                         <div class="product-info mst-15" data-animate="animate__fadeIn">
-                            <div class="product-timer text-danger ptb-10 plr-15 bg-danger border-danger border-radius countdown" data-time="2027/12/31 00:00:00">
+                            <div class="product-timer text-danger ptb-10 plr-15 bg-danger border-danger border-radius countdown" data-time="{{ $product->sale_ends_at->format('Y/m/d H:i:s') }}">
                                 <div class="ul-mt10 justify-content-between">
                                     <div class="product-timer-text"><i class="ri-timer-line d-inline-block icon-16 mer-4 blinking"></i><span class="heading-weight">Hurry up! sales end soon!</span></div>
                                     <div class="product-timer-countdown">
@@ -179,61 +179,28 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                         <div class="product-info mst-25" data-animate="animate__fadeIn">
                             <div class="product-variant">
                                 <div class="product-variant-option">
                                     <span class="d-inline-block meb-11"><span class="heading-color heading-weight mer-10">Size:</span>16cm<a href="#size-modal" data-bs-toggle="modal" class="msl-15 msl-sm-30 text-uppercase heading-weight text-decoration-underline">Size guide</a></span>
                                     <div class="product-option-block size">
                                         <ul class="ul-mt5">
-                                            <li>
-                                                <label class="cust-checkbox-label">
-                                                    <input type="radio" name="pro-gleam-band-size" class="cust-checkbox" value="16cm" checked>
-                                                    <span class="d-block cust-check border-full border-radius">16cm</span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label class="cust-checkbox-label disabled">
-                                                    <input type="radio" name="pro-gleam-band-size" class="cust-checkbox" value="18cm">
-                                                    <span class="d-block cust-check border-full border-radius">18cm</span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label class="cust-checkbox-label">
-                                                    <input type="radio" name="pro-gleam-band-size" class="cust-checkbox" value="20cm">
-                                                    <span class="d-block cust-check border-full border-radius">20cm</span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label class="cust-checkbox-label">
-                                                    <input type="radio" name="pro-gleam-band-size" class="cust-checkbox" value="22cm">
-                                                    <span class="d-block cust-check border-full border-radius">22cm</span>
-                                                </label>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="product-variant-option mst-20">
-                                    <span class="d-inline-block meb-11"><span class="heading-color heading-weight mer-10">Color:</span>Aliceblue</span>
-                                    <div class="product-option-block color">
-                                        <ul class="ul-mt10">
-                                            <li>
-                                                <label class="cust-checkbox-label">
-                                                    <input type="radio" name="pro-gleam-band-color" class="cust-checkbox" value="aliceblue" checked>
-                                                    <span class="d-block cust-check aliceblue"></span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label class="cust-checkbox-label disabled">
-                                                    <input type="radio" name="pro-gleam-band-color" class="cust-checkbox" value="antiquewhite">
-                                                    <span class="d-block cust-check antiquewhite"></span>
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label class="cust-checkbox-label">
-                                                    <input type="radio" name="pro-gleam-band-color" class="cust-checkbox" value="azure">
-                                                    <span class="d-block cust-check azure"></span>
-                                                </label>
-                                            </li>
+                                            @foreach ($product->available_sizes ?? [] as $size)
+                                                <li>
+                                                    <label class="cust-checkbox-label">
+                                                        <input
+                                                            type="radio"
+                                                            name="size"
+                                                            class="cust-checkbox"
+                                                            value="{{ $size }}">
+                                                        <span class="d-block cust-check border-full border-radius">
+                                                            {{ $size }}
+                                                        </span>
+                                                    </label>
+                                                </li>
+                                            @endforeach
+
                                         </ul>
                                     </div>
                                 </div>
@@ -269,12 +236,12 @@
                         </div>
                         <div class="product-info mst-15" data-animate="animate__fadeIn">
                             <div class="ul-row">
-                                <div class="product-wishlist">
-                                    <a href="javascript:void(0)" class="add-to-wishlist heading-color"><i class="ri-heart-line icon-16 mer-4"></i>Wishlist</a>
-                                </div>
-                                <div class="product-compare">
-                                    <a href="product-comparison.html" class="add-to-compare heading-color"><i class="ri-stack-line icon-16 mer-4"></i>Compare</a>
-                                </div>
+{{--                                <div class="product-wishlist">--}}
+{{--                                    <a href="javascript:void(0)" class="add-to-wishlist heading-color"><i class="ri-heart-line icon-16 mer-4"></i>Wishlist</a>--}}
+{{--                                </div>--}}
+{{--                                <div class="product-compare">--}}
+{{--                                    <a href="product-comparison.html" class="add-to-compare heading-color"><i class="ri-stack-line icon-16 mer-4"></i>Compare</a>--}}
+{{--                                </div>--}}
                                 <div class="product-ask">
                                     <a href="#question-modal" data-bs-toggle="modal" class="ask-question heading-color"><i class="ri-edit-box-line icon-16 mer-4"></i>Ask a question</a>
                                 </div>
@@ -301,25 +268,20 @@
                                 <span class="d-inline-block"><i class="ri-check-line heading-color icon-16 mer-4"></i>Your order will reach you within 5-7 business days</span>
                             </div>
                         </div>
-                        <div class="product-info mst-10" data-animate="animate__fadeIn">
-                            <div class="product-return">
-                                <span class="d-inline-block"><i class="ri-check-line heading-color icon-16 mer-4"></i>We accept returns within 30 days of purchase</span>
-                            </div>
-                        </div>
-                        <div class="product-info mst-20" data-animate="animate__fadeIn">
-                            <div class="product-payment">
-                                <ul class="payment-ul">
-                                    <li class="payment-li ul-mt5">
-                                        <a href="javascript:void(0)" class="d-block"><img src="assets/image/other/paying-american.png" class="width-40 img-fluid border-radius" alt="paying-american"></a>
-                                        <a href="javascript:void(0)" class="d-block"><img src="assets/image/other/paying-club.png" class="width-40 img-fluid border-radius" alt="paying-club"></a>
-                                        <a href="javascript:void(0)" class="d-block"><img src="assets/image/other/paying-discover.png" class="width-40 img-fluid border-radius" alt="paying-discover"></a>
-                                        <a href="javascript:void(0)" class="d-block"><img src="assets/image/other/paying-maestro.png" class="width-40 img-fluid border-radius" alt="paying-maestro"></a>
-                                        <a href="javascript:void(0)" class="d-block"><img src="assets/image/other/paying-paypal.png" class="width-40 img-fluid border-radius" alt="paying-paypal"></a>
-                                        <a href="javascript:void(0)" class="d-block"><img src="assets/image/other/paying-visa.png" class="width-40 img-fluid border-radius" alt="paying-visa"></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+{{--                        <div class="product-info mst-20" data-animate="animate__fadeIn">--}}
+{{--                            <div class="product-payment">--}}
+{{--                                <ul class="payment-ul">--}}
+{{--                                    <li class="payment-li ul-mt5">--}}
+{{--                                        <a href="javascript:void(0)" class="d-block"><img src="assets/image/other/paying-american.png" class="width-40 img-fluid border-radius" alt="paying-american"></a>--}}
+{{--                                        <a href="javascript:void(0)" class="d-block"><img src="assets/image/other/paying-club.png" class="width-40 img-fluid border-radius" alt="paying-club"></a>--}}
+{{--                                        <a href="javascript:void(0)" class="d-block"><img src="assets/image/other/paying-discover.png" class="width-40 img-fluid border-radius" alt="paying-discover"></a>--}}
+{{--                                        <a href="javascript:void(0)" class="d-block"><img src="assets/image/other/paying-maestro.png" class="width-40 img-fluid border-radius" alt="paying-maestro"></a>--}}
+{{--                                        <a href="javascript:void(0)" class="d-block"><img src="assets/image/other/paying-paypal.png" class="width-40 img-fluid border-radius" alt="paying-paypal"></a>--}}
+{{--                                        <a href="javascript:void(0)" class="d-block"><img src="assets/image/other/paying-visa.png" class="width-40 img-fluid border-radius" alt="paying-visa"></a>--}}
+{{--                                    </li>--}}
+{{--                                </ul>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                         <div class="product-info mst-15" data-animate="animate__fadeIn">
                             <div class="product-service">
                                 <div class="ul-mt15">
@@ -351,9 +313,9 @@
                             </div>
                         </div>
                     </div>
-                    <!-- product-detail-info end -->
                 </div>
             </div>
+
             <div class="frequent section-pt">
                 <h2 class="font-18 meb-25" data-animate="animate__fadeIn">Frequently bought together</h2>
                 <div class="frequent-group">

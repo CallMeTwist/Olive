@@ -15,6 +15,7 @@ class Product extends Model
     protected $casts = [
         'available_sizes' => 'array',
         'is_active' => 'boolean',
+        'sale_ends_at' => 'datetime',
     ];
 
     protected static function booted()
