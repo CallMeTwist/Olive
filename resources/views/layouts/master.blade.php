@@ -1510,8 +1510,8 @@
 <!-- back-to-top end -->
 <!-- plugin js -->
 <script src="{{asset('/assets/js/plugin.js')}}"></script>
-<!-- theme js -->
-
+<!-- other js -->
+@stack('cart-js')
 <!-- theme js -->
 <script src="{{asset('/assets/js/theme.js')}}"></script>
 </body>

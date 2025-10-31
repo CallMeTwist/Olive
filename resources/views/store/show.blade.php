@@ -6,6 +6,10 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/store-custom.css') }}">
 @endpush
 
+@push('cart-js')
+    <script src="{{asset('/assets/js/cart.js')}}"></script>
+@endpush
+
 
 @section('breadcrumb')
     <div class="breadcrumb-area ptb-15" data-bgimg="{{asset('/assets/image/other/breadcrumb-bgimg.jpg')}}">
@@ -91,7 +95,7 @@
                 </div>
                 <div class="col-12 col-lg-6 p-lg-sticky top-0">
                     <!-- product-detail-info start -->
-                    <div class="product-detail-info psl-xxl-10">
+                    <form class="product-detail-info psl-xxl-10">
                         <div class="product-info" data-animate="animate__fadeIn">
                             <div class="product-sku">
                                 <span class="font-14 text-uppercase">SKU-{{ $product->sku ?? 'N/A' }}</span>
@@ -180,10 +184,16 @@
                             </div>
                         </div>
                         @endif
-                        <div class="product-info mst-25" data-animate="animate__fadeIn">
+                        <form id="add-to-cart-form"
+                              method="POST"
+                              action="{{ route('cart.add', $product->id) }}"
+                              data-product-id="{{ $product->id }}"
+                              class="product-info mst-25"
+                              data-animate="animate__fadeIn">
+                            @csrf
                             <div class="product-variant">
                                 <div class="product-variant-option">
-                                    <span class="d-inline-block meb-11"><span class="heading-color heading-weight mer-10">Size:</span>16cm<a href="#size-modal" data-bs-toggle="modal" class="msl-15 msl-sm-30 text-uppercase heading-weight text-decoration-underline">Size guide</a></span>
+                                    <span class="d-inline-block meb-11"><span class="heading-color heading-weight mer-10">Size:</span><a href="#size-modal" data-bs-toggle="modal" class="msl-15 msl-sm-30 text-uppercase heading-weight text-decoration-underline">Size guide</a></span>
                                     <div class="product-option-block size">
                                         <ul class="ul-mt5">
                                             @foreach ($product->available_sizes ?? [] as $size)
@@ -205,35 +215,74 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="product-info mst-25" data-animate="animate__fadeIn">
+                        </form>
+
+{{--                            --}}{{-- Size selector --}}
+{{--                            @if(!empty($product->available_sizes))--}}
+{{--                                <div class="product-sizes mst-20">--}}
+{{--                                    <span class="heading-color heading-weight mer-10">Size:</span>--}}
+{{--                                    <ul class="d-flex flex-wrap gap-2 list-unstyled">--}}
+{{--                                        @foreach ($product->available_sizes as $size)--}}
+{{--                                            <li>--}}
+{{--                                                <label class="cust-checkbox-label">--}}
+{{--                                                    <input--}}
+{{--                                                        type="radio"--}}
+{{--                                                        name="size"--}}
+{{--                                                        value="{{ $size }}"--}}
+{{--                                                        class="cust-checkbox"--}}
+{{--                                                        {{ $loop->first ? 'checked' : '' }}>--}}
+{{--                                                    <span class="d-block cust-check border-full border-radius">{{ $size }}</span>--}}
+{{--                                                </label>--}}
+{{--                                            </li>--}}
+{{--                                        @endforeach--}}
+{{--                                    </ul>--}}
+{{--                                </div>--}}
+{{--                            @endif--}}
+
+                            {{-- Quantity selector --}}
                             <div class="product-quantity d-flex flex-wrap align-items-center">
                                 <span class="heading-color heading-weight mer-10">Quantity:</span>
                                 <div class="js-qty-wrapper">
                                     <div class="js-qty-wrap d-flex extra-bg border-full br-hidden">
-                                        <button type="button" class="js-qty-adjust js-qty-adjust-minus body-color icon-16" aria-label="Remove item"><i class="ri-subtract-line d-block lh-1"></i></button>
-                                        <input type="number" name="gleam-band-16cm-aliceblue" class="js-qty-num p-0 text-center border-0" value="1" min="1">
-                                        <button type="button" class="js-qty-adjust js-qty-adjust-plus body-color icon-16" aria-label="Add item"><i class="ri-add-line d-block lh-1"></i></button>
+                                        <button type="button" class="js-qty-adjust js-qty-adjust-minus body-color icon-16" aria-label="Remove item">
+                                            <i class="ri-subtract-line d-block lh-1"></i>
+                                        </button>
+                                        <input
+                                            type="number"
+                                            id="quantity-input"
+                                            name="quantity"
+                                            class="js-qty-num p-0 text-center border-0"
+                                            value="1"
+                                            min="1">
+                                        <button type="button" class="js-qty-adjust js-qty-adjust-plus body-color icon-16" aria-label="Add item">
+                                            <i class="ri-add-line d-block lh-1"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
+
+                            {{-- Buttons --}}
                             <div class="product-button mst-15">
                                 <div class="row btn-row15">
                                     <div class="col-12 col-sm-6">
-                                        <button type="submit" class="w-100 btn-style quaternary-btn add-to-cart">
-                                                    <span class="product-icon">
-                                                        <span class="product-bag-icon">Add to cart</span>
-                                                        <span class="product-loader-icon icon-16"><i class="ri-loader-4-line d-block lh-1"></i></span>
-                                                        <span class="product-check-icon icon-16"><i class="ri-check-line d-block lh-1"></i></span>
-                                                    </span>
+                                        <button
+                                            type="button"
+                                            id="add-to-cart-btn"
+                                            class="w-100 btn-style quaternary-btn add-to-cart">
+                                            <span class="product-icon">
+                                                <span class="product-bag-icon">Add to cart</span>
+                                                <span class="product-loader-icon icon-16"><i class="ri-loader-4-line d-block lh-1"></i></span>
+                                                <span class="product-check-icon icon-16"><i class="ri-check-line d-block lh-1"></i></span>
+                                            </span>
                                         </button>
                                     </div>
                                     <div class="col-12 col-sm-6">
-                                        <a href="checkout.html" class="w-100 btn-style secondary-btn">Buy now</a>
+                                        <a href="{{route('cart.index')}}" class="w-100 btn-style secondary-btn">Buy now</a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
+
                         <div class="product-info mst-15" data-animate="animate__fadeIn">
                             <div class="ul-row">
 {{--                                <div class="product-wishlist">--}}
