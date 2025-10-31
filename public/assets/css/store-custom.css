@@ -76,105 +76,147 @@
 }
 
 /* ========================================
-   PRODUCT DETAIL PAGE
+   PRODUCT DETAIL PAGE - MODERN + FALLBACK
    ======================================== */
 
-/* Main product image (big slider) */
-.product-img-big {
-    margin-bottom: 15px;
+/* Main product image container */
+.product-img-big .swiper-slide {
+    height: auto;
 }
 
 .product-img-big .product-item-img {
     position: relative;
-    padding-bottom: 100%; /* 1:1 aspect ratio - CHANGE THIS for different ratios */
-    overflow: hidden;
+    width: 100%;
     background: #f8f8f8;
     border-radius: 8px;
+    overflow: hidden;
+    /* Default fallback - padding-bottom method */
+    padding-bottom: 100%;
 }
 
-.product-img-big .product-item-img img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Crops image to fill container */
+/* Use aspect-ratio for modern browsers (this will override padding-bottom) */
+@supports (aspect-ratio: 1 / 1) {
+    .product-img-big .product-item-img {
+        aspect-ratio: 1 / 1;
+        padding-bottom: 0;
+    }
+
+    .product-img-big .product-item-img img.zoom {
+        position: static;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+/* Fallback for browsers without aspect-ratio support */
+@supports not (aspect-ratio: 1 / 1) {
+    .product-img-big .product-item-img {
+        padding-bottom: 100%;
+    }
+
+    .product-img-big .product-item-img img.zoom {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+/* Universal image styles - will work in both cases */
+.product-img-big .product-item-img img.zoom {
     object-position: center;
+    display: block;
 }
 
-/* Fullscreen button - adjusted for absolute positioning */
-.product-img-big .product-item-img .full-view {
-    position: absolute !important;
-    top: 15px !important;
-    right: 15px !important;
-    z-index: 10 !important;
+/* Fullscreen button */
+.product-img-big .full-view {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 10;
 }
 
-/* Thumbnail images (small slider) */
+/* Thumbnail images */
 .product-img-small {
     margin-top: 15px;
 }
 
+.product-img-small .swiper-slide {
+    height: auto;
+}
+
 .product-img-small .product-item-img {
     position: relative;
-    padding-bottom: 100%; /* 1:1 aspect ratio for thumbnails */
-    overflow: hidden;
+    width: 100%;
     background: #f8f8f8;
     border-radius: 8px;
+    overflow: hidden;
     cursor: pointer;
-    transition: all 0.3s ease;
     border: 2px solid transparent;
+    transition: all 0.3s ease;
+    /* Fallback */
+    padding-bottom: 100%;
+}
+
+@supports (aspect-ratio: 1 / 1) {
+    .product-img-small .product-item-img {
+        aspect-ratio: 1 / 1;
+        padding-bottom: 0;
+    }
+
+    .product-img-small .product-item-img img {
+        position: static;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+@supports not (aspect-ratio: 1 / 1) {
+    .product-img-small .product-item-img {
+        padding-bottom: 100%;
+    }
+
+    .product-img-small .product-item-img img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.product-img-small .product-item-img img {
+    object-position: center;
+    display: block;
+}
+
+.product-img-small .swiper-slide-thumb-active .product-item-img {
+    border-color: #000;
 }
 
 .product-img-small .product-item-img:hover {
     opacity: 0.8;
-    transform: translateY(-2px);
-}
-
-.product-img-small .product-item-img img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-}
-
-/* Active thumbnail styling */
-.product-img-small .swiper-slide-thumb-active .product-item-img {
-    border-color: var(--dominant-color, #000);
-    opacity: 1;
-}
-
-/* Ensure swiper maintains structure */
-.product-detail-slider .swiper-slide {
-    height: auto;
-}
-
-/* Navigation buttons positioning */
-.product-img-big .swiper-buttons .swiper-prev {
-    left: 15px;
-}
-
-.product-img-big .swiper-buttons .swiper-next {
-    right: 15px;
 }
 
 /* ========================================
    RESPONSIVE ADJUSTMENTS
    ======================================== */
 
-@media (max-width: 991px) {
-    .product-img-big .product-item-img {
-        padding-bottom: 100%; /* Keep square on mobile */
-    }
-}
+/*@media (max-width: 991px) {*/
+/*    .product-img-big .product-item-img {*/
+/*        padding-bottom: 100%; !* Keep square on mobile *!*/
+/*    }*/
+/*}*/
 
-@media (max-width: 575px) {
-    .product-img-big .product-item-img .full-view {
-        width: 32px;
-        height: 32px;
-        font-size: 14px;
-    }
-}
+/*@media (max-width: 575px) {*/
+/*    .product-img-big .product-item-img .full-view {*/
+/*        width: 32px;*/
+/*        height: 32px;*/
+/*        font-size: 14px;*/
+/*    }*/
+/*}*/
