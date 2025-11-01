@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <base href="{{ asset('') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Olive</title>
     <meta name="description" content="A quality jewelry">
     <meta name="keywords" content="jewelry, eCommerce, bootstrap, HTML template, luxury, fashion, rings, bracelets, necklaces, shop">

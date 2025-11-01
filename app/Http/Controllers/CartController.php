@@ -17,6 +17,8 @@ class CartController extends Controller
      */
     public function index()
     {
+//        \Log::info('Session in GET /cart: ', session()->all());
+//        dd(session()->get('cart.items'), session()->all());
         $items = $this->cart->all();
         $subtotal = $this->cart->subtotal();
         $tax = $this->cart->tax();
@@ -41,29 +43,47 @@ class CartController extends Controller
      */
     public function add(Request $request, Product $product)
     {
-        $request->validate([
+        // ✅ Validate incoming data
+        $validated = $request->validate([
             'quantity' => 'required|integer|min:1|max:100',
+            'size' => 'nullable|string|max:50',
         ]);
 
-        $quantity = (int) $request->input('quantity', 1);
+        $quantity = (int) $validated['quantity'];
+        $size = $validated['size'] ?? null;
 
         // Check stock
         if ($product->stock < $quantity) {
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Not enough stock available. Only ' . $product->stock . ' left.'
+                ], 400);
+            }
             return back()->with('error', 'Not enough stock available. Only ' . $product->stock . ' left.');
         }
 
         // Check if product is active
         if (!$product->is_active) {
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'This product is currently unavailable.'
+                ], 400);
+            }
             return back()->with('error', 'This product is currently unavailable.');
         }
 
-        $this->cart->add($product, $quantity);
+        // ✅ Add to cart with size
+        $this->cart->add($product, $quantity, $size);
 
-        if ($request->ajax()) {
+        // ✅ AJAX response
+        if ($request->ajax() || $request->wantsJson()) {
             return response()->json([
                 'success' => true,
                 'message' => 'Added to cart',
                 'cart_count' => $this->cart->count(),
+                'cart_total' => $this->cart->total(),
             ]);
         }
 
@@ -85,8 +105,8 @@ class CartController extends Controller
         if ($request->ajax()) {
             return response()->json([
                 'success' => true,
-                'subtotal' => $this->cart->subtotal(),
-                'total' => $this->cart->total(),
+                'subtotal' => number_format($this->cart->subtotal(), 2),
+                'total' => number_format($this->cart->total(), 2),
                 'cart_count' => $this->cart->count(),
             ]);
         }
@@ -105,6 +125,7 @@ class CartController extends Controller
             return response()->json([
                 'success' => true,
                 'cart_count' => $this->cart->count(),
+                'cart_total' => number_format($this->cart->total(), 2),
             ]);
         }
 
@@ -117,6 +138,14 @@ class CartController extends Controller
     public function clear()
     {
         $this->cart->clear();
+
+        if (request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Cart cleared!'
+            ]);
+        }
+
         return back()->with('success', 'Cart cleared!');
     }
 }

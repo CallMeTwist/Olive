@@ -95,7 +95,7 @@
                 </div>
                 <div class="col-12 col-lg-6 p-lg-sticky top-0">
                     <!-- product-detail-info start -->
-                    <form class="product-detail-info psl-xxl-10">
+                    <div class="product-detail-info psl-xxl-10">
                         <div class="product-info" data-animate="animate__fadeIn">
                             <div class="product-sku">
                                 <span class="font-14 text-uppercase">SKU-{{ $product->sku ?? 'N/A' }}</span>
@@ -215,29 +215,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </form>
 
-{{--                            --}}{{-- Size selector --}}
-{{--                            @if(!empty($product->available_sizes))--}}
-{{--                                <div class="product-sizes mst-20">--}}
-{{--                                    <span class="heading-color heading-weight mer-10">Size:</span>--}}
-{{--                                    <ul class="d-flex flex-wrap gap-2 list-unstyled">--}}
-{{--                                        @foreach ($product->available_sizes as $size)--}}
-{{--                                            <li>--}}
-{{--                                                <label class="cust-checkbox-label">--}}
-{{--                                                    <input--}}
-{{--                                                        type="radio"--}}
-{{--                                                        name="size"--}}
-{{--                                                        value="{{ $size }}"--}}
-{{--                                                        class="cust-checkbox"--}}
-{{--                                                        {{ $loop->first ? 'checked' : '' }}>--}}
-{{--                                                    <span class="d-block cust-check border-full border-radius">{{ $size }}</span>--}}
-{{--                                                </label>--}}
-{{--                                            </li>--}}
-{{--                                        @endforeach--}}
-{{--                                    </ul>--}}
-{{--                                </div>--}}
-{{--                            @endif--}}
 
                             {{-- Quantity selector --}}
                             <div class="product-quantity d-flex flex-wrap align-items-center">
@@ -247,7 +225,7 @@
                                         <button type="button" class="js-qty-adjust js-qty-adjust-minus body-color icon-16" aria-label="Remove item">
                                             <i class="ri-subtract-line d-block lh-1"></i>
                                         </button>
-                                        <input
+                                        <label for="quantity-input"></label><input
                                             type="number"
                                             id="quantity-input"
                                             name="quantity"
@@ -268,16 +246,13 @@
                                         <button
                                             type="button"
                                             id="add-to-cart-btn"
-                                            class="w-100 btn-style quaternary-btn add-to-cart">
-                                            <span class="product-icon">
-                                                <span class="product-bag-icon">Add to cart</span>
-                                                <span class="product-loader-icon icon-16"><i class="ri-loader-4-line d-block lh-1"></i></span>
-                                                <span class="product-check-icon icon-16"><i class="ri-check-line d-block lh-1"></i></span>
-                                            </span>
+                                            class="w-100 btn-style quaternary-btn">
+                                            Add to Cart
                                         </button>
                                     </div>
                                     <div class="col-12 col-sm-6">
-                                        <a href="{{route('cart.index')}}" class="w-100 btn-style secondary-btn">Buy now</a>
+                                        <!-- replace the anchor with a button and data-action flag -->
+                                        <button type="button" id="buy-now-btn" class="w-100 btn-style secondary-btn" data-action="buy">Buy now</button>
                                     </div>
                                 </div>
                             </div>
@@ -1685,3 +1660,9 @@
         </div>
     </section>
 @endsection
+
+{{--<script>--}}
+{{--    console.log('inline script running')--}}
+{{--    console.log('Form exists?', document.getElementById('add-to-cart-form'))--}}
+{{--    console.log('Button exists?', document.getElementById('add-to-cart-btn'))--}}
+{{--</script>--}}

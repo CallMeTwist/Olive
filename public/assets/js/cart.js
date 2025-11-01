@@ -1,55 +1,99 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const addToCartBtn = document.querySelector('#add-to-cart-btn');
+// public/assets/js/cart.js
 
-    if (addToCartBtn) {
-        addToCartBtn.addEventListener('click', function (e) {
-            e.preventDefault();
+document.addEventListener('DOMContentLoaded', function () {
+    console.log('Cart JS loaded'); // ✅ Debug log
 
-            const form = document.querySelector('#add-to-cart-form');
-            const productId = form.dataset.productId;
-            const quantity = parseInt(document.querySelector('#quantity-input').value) || 1;
-            const size = form.querySelector('input[name="size"]:checked')?.value || null;
+    const addBtn = document.getElementById('buy-now-btn');
+    const form = document.getElementById('add-to-cart-form');
 
-            // Loading animation
-            const bagIcon = form.querySelector('.product-bag-icon');
-            const loaderIcon = form.querySelector('.product-loader-icon');
-            const checkIcon = form.querySelector('.product-check-icon');
+    if (!addBtn || !form) {
+        console.error('Add to cart button or form not found');
+        return;
+    }
 
-            bagIcon.style.display = 'none';
-            loaderIcon.style.display = 'block';
+    console.log('Form found, attaching event listener'); // ✅ Debug log
 
-            fetch(`/cart/add/${productId}`, {
+    addBtn.addEventListener('click', async function (e) {
+        e.preventDefault();
+        console.log('Add to cart clicked'); // ✅ Debug log
+
+        const productId = form.dataset.productId;
+        const quantityInput = form.querySelector('input[name="quantity"]');
+        const sizeInput = form.querySelector('input[name="size"]:checked');
+
+        const quantity = quantityInput ? quantityInput.value : 1;
+        const size = sizeInput ? sizeInput.value : null;
+
+        console.log('Data:', { productId, quantity, size }); // ✅ Debug log
+
+        // Validation
+        if (!size) {
+            alert('Please select a size.');
+            return;
+        }
+
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+
+        if (!csrfToken) {
+            console.error('CSRF token not found');
+            alert('Security token missing. Please refresh the page.');
+            return;
+        }
+
+        // Show loading state
+        const originalText = addBtn.innerHTML;
+        addBtn.disabled = true;
+        addBtn.innerHTML = '<i class="ri-loader-4-line"></i> Adding...';
+
+        try {
+            const response = await fetch(`/cart/add/${productId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                    'X-Requested-With': 'XMLHttpRequest'
+                    'X-CSRF-TOKEN': csrfToken,
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json',
                 },
-                body: JSON.stringify({ quantity, size })
-            })
-                .then(res => res.json())
-                .then(data => {
-                    loaderIcon.style.display = 'none';
-                    checkIcon.style.display = 'block';
+                body: JSON.stringify({
+                    quantity: parseInt(quantity),
+                    size: size
+                }),
+            });
 
-                    if (data.success) {
-                        document.querySelectorAll('.cart-counter').forEach(el => {
-                            el.textContent = data.cart_count;
-                        });
-                    } else {
-                        alert('Something went wrong!');
-                    }
+            console.log('Response status:', response.status); // ✅ Debug log
 
-                    setTimeout(() => {
-                        checkIcon.style.display = 'none';
-                        bagIcon.style.display = 'block';
-                    }, 2000);
-                })
-                .catch(err => {
-                    console.error(err);
-                    loaderIcon.style.display = 'none';
-                    bagIcon.style.display = 'block';
+            const result = await response.json();
+            console.log('Result:', result); // ✅ Debug log
+
+            if (response.ok && result.success) {
+                // ✅ Update cart count in header
+                document.querySelectorAll('.cart-counter').forEach(el => {
+                    el.textContent = result.cart_count;
                 });
-        });
-    }
+
+                // ✅ Show success state
+                addBtn.innerHTML = '<i class="ri-check-line"></i> Added!';
+                addBtn.classList.add('btn-success');
+
+                // Optional: Show success message
+                alert('✅ Added to cart!');
+
+                // Reset button after 2 seconds
+                setTimeout(() => {
+                    addBtn.innerHTML = originalText;
+                    addBtn.disabled = false;
+                    addBtn.classList.remove('btn-success');
+                }, 2000);
+            } else {
+                throw new Error(result.message || 'Failed to add to cart');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error adding to cart: ' + error.message);
+
+            // Reset button
+            addBtn.innerHTML = originalText;
+            addBtn.disabled = false;
+        }
+    });
 });

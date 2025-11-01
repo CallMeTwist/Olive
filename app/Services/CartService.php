@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Product;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Session;
 
 class CartService
 {
@@ -12,9 +13,15 @@ class CartService
     /**
      * Add product to cart
      */
-    public function add(Product $product, int $quantity = 1, array $options = []): void
+    public function add(Product $product, int $quantity = 1, ?string $size = null, array $options = []): void
     {
-        $cart = session()->get($this->sessionKey, []);
+
+        $cart = Session::get($this->sessionKey, []);
+
+        // Include size in options if provided
+        if ($size) {
+            $options['size'] = $size;
+        }
 
         // Create unique key (product + variant if needed)
         $cartKey = $this->generateCartKey($product->id, $options);
@@ -32,12 +39,13 @@ class CartService
                 'old_price' => $product->old_price ? (float) $product->old_price : null,
                 'quantity' => $quantity,
                 'image' => $product->primaryImage ? $product->primaryImage->path : null,
-                'size' => $product->size,
-                'options' => $options, // Additional options (color, custom text, etc.)
+                'size' => $size ?? $product->size, // ✅ Use selected size or product default
+                'options' => $options,
             ];
         }
 
         session()->put($this->sessionKey, $cart);
+        session()->save(); // ✅ Force save session
     }
 
     /**
