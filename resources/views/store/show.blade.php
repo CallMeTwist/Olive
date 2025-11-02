@@ -251,8 +251,7 @@
                                         </button>
                                     </div>
                                     <div class="col-12 col-sm-6">
-                                        <!-- replace the anchor with a button and data-action flag -->
-                                        <button type="button" id="buy-now-btn" class="w-100 btn-style secondary-btn" data-action="buy">Buy now</button>
+                                        <a href="{{route('cart.index')}}" class="w-100 btn-style secondary-btn">Buy now</a>
                                     </div>
                                 </div>
                             </div>

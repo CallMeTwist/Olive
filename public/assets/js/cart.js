@@ -3,7 +3,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     console.log('Cart JS loaded'); // ✅ Debug log
 
-    const addBtn = document.getElementById('buy-now-btn');
+    const addBtn = document.getElementById('add-to-cart-btn');
     const form = document.getElementById('add-to-cart-form');
 
     if (!addBtn || !form) {
@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     quantity: parseInt(quantity),
                     size: size
                 }),
+                credentials: 'same-origin'
             });
 
             console.log('Response status:', response.status); // ✅ Debug log

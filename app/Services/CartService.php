@@ -2,93 +2,104 @@
 
 namespace App\Services;
 
+use App\Models\Cart;
+use App\Models\CartItem;
 use App\Models\Product;
-use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class CartService
 {
-    protected string $sessionKey = 'cart.items';
+    /**
+     * Get or create cart for current user/session
+     */
+    protected function getCart(): Cart
+    {
+        if (Auth::check()) {
+            // Logged-in user
+            return Cart::firstOrCreate(['user_id' => Auth::id()]);
+        }
+
+        // Guest user - use session ID
+        $sessionId = Session::getId();
+        return Cart::firstOrCreate(['session_id' => $sessionId]);
+    }
 
     /**
      * Add product to cart
      */
-    public function add(Product $product, int $quantity = 1, ?string $size = null, array $options = []): void
+    public function add(Product $product, int $quantity = 1, ?string $size = null, array $options = []): CartItem
     {
+        $cart = $this->getCart();
 
-        $cart = Session::get($this->sessionKey, []);
+        // Check if item already exists
+        $cartItem = $cart->items()
+            ->where('product_id', $product->id)
+            ->where('size', $size)
+            ->first();
 
-        // Include size in options if provided
-        if ($size) {
-            $options['size'] = $size;
-        }
-
-        // Create unique key (product + variant if needed)
-        $cartKey = $this->generateCartKey($product->id, $options);
-
-        if (isset($cart[$cartKey])) {
-            // Update quantity if item exists
-            $cart[$cartKey]['quantity'] += $quantity;
+        if ($cartItem) {
+            // Update quantity
+            $cartItem->quantity += $quantity;
+            $cartItem->save();
         } else {
-            // Add new item
-            $cart[$cartKey] = [
-                'id' => $product->id,
-                'title' => $product->title,
-                'sku' => $product->sku,
-                'price' => (float) $product->price,
-                'old_price' => $product->old_price ? (float) $product->old_price : null,
+            // Create new cart item
+            $cartItem = $cart->items()->create([
+                'product_id' => $product->id,
                 'quantity' => $quantity,
-                'image' => $product->primaryImage ? $product->primaryImage->path : null,
-                'size' => $size ?? $product->size, // ✅ Use selected size or product default
+                'size' => $size,
+                'price' => $product->price, // Store current price
                 'options' => $options,
-            ];
+            ]);
         }
 
-        session()->put($this->sessionKey, $cart);
-        session()->save(); // ✅ Force save session
+        return $cartItem;
     }
 
     /**
-     * Update item quantity
+     * Update cart item quantity
      */
-    public function update(string $cartKey, int $quantity): void
+    public function update(int $cartItemId, int $quantity): bool
     {
-        $cart = session()->get($this->sessionKey, []);
+        $cart = $this->getCart();
+        $cartItem = $cart->items()->find($cartItemId);
 
-        if (isset($cart[$cartKey])) {
-            if ($quantity <= 0) {
-                unset($cart[$cartKey]);
-            } else {
-                $cart[$cartKey]['quantity'] = $quantity;
-            }
-            session()->put($this->sessionKey, $cart);
+        if (!$cartItem) {
+            return false;
         }
+
+        if ($quantity <= 0) {
+            $cartItem->delete();
+        } else {
+            $cartItem->quantity = $quantity;
+            $cartItem->save();
+        }
+
+        return true;
     }
 
     /**
      * Remove item from cart
      */
-    public function remove(string $cartKey): void
+    public function remove(int $cartItemId): bool
     {
-        $cart = session()->get($this->sessionKey, []);
-        unset($cart[$cartKey]);
-        session()->put($this->sessionKey, $cart);
+        $cart = $this->getCart();
+        $cartItem = $cart->items()->find($cartItemId);
+
+        if ($cartItem) {
+            $cartItem->delete();
+            return true;
+        }
+
+        return false;
     }
 
     /**
      * Get all cart items
      */
-    public function all(): array
+    public function all()
     {
-        return session()->get($this->sessionKey, []);
-    }
-
-    /**
-     * Get cart items as collection
-     */
-    public function items(): Collection
-    {
-        return collect($this->all());
+        return $this->getCart()->items()->with('product.primaryImage')->get();
     }
 
     /**
@@ -96,7 +107,7 @@ class CartService
      */
     public function count(): int
     {
-        return array_sum(array_column($this->all(), 'quantity'));
+        return $this->getCart()->items_count;
     }
 
     /**
@@ -104,32 +115,23 @@ class CartService
      */
     public function subtotal(): float
     {
-        $cart = $this->all();
-        return array_reduce($cart, fn($sum, $item) =>
-            $sum + ($item['price'] * $item['quantity']), 0.0
-        );
+        return $this->getCart()->subtotal;
     }
 
     /**
-     * Calculate total savings
+     * Calculate savings
      */
     public function savings(): float
     {
-        $cart = $this->all();
-        return array_reduce($cart, function($sum, $item) {
-            if ($item['old_price']) {
-                return $sum + (($item['old_price'] - $item['price']) * $item['quantity']);
-            }
-            return $sum;
-        }, 0.0);
+        return $this->getCart()->savings;
     }
 
     /**
-     * Calculate tax (7.5% VAT for Nigeria)
+     * Calculate tax
      */
-    public function tax(float $rate = 0.075): float
+    public function tax(): float
     {
-        return $this->subtotal() * $rate;
+        return $this->getCart()->tax;
     }
 
     /**
@@ -137,17 +139,15 @@ class CartService
      */
     public function shipping(): float
     {
-        // Free shipping over ₦30,000
-        $subtotal = $this->subtotal();
-        return $subtotal >= 30000 ? 0 : 2500;
+        return $this->getCart()->shipping;
     }
 
     /**
-     * Calculate final total
+     * Calculate total
      */
     public function total(): float
     {
-        return $this->subtotal() + $this->tax() + $this->shipping();
+        return $this->getCart()->total;
     }
 
     /**
@@ -155,7 +155,7 @@ class CartService
      */
     public function clear(): void
     {
-        session()->forget($this->sessionKey);
+        $this->getCart()->items()->delete();
     }
 
     /**
@@ -163,55 +163,79 @@ class CartService
      */
     public function isEmpty(): bool
     {
-        return empty($this->all());
+        return $this->getCart()->items()->count() === 0;
     }
 
     /**
-     * Generate unique cart key
+     * Merge guest cart to user cart on login
      */
-    protected function generateCartKey(int $productId, array $options = []): string
+    public function mergeOnLogin(string $guestSessionId, int $userId): void
     {
-        if (empty($options)) {
-            return (string) $productId;
+        $guestCart = Cart::where('session_id', $guestSessionId)->first();
+
+        if (!$guestCart || $guestCart->items->isEmpty()) {
+            return;
         }
 
-        ksort($options);
-        return $productId . '_' . md5(json_encode($options));
+        $userCart = Cart::firstOrCreate(['user_id' => $userId]);
+
+        foreach ($guestCart->items as $guestItem) {
+            $existingItem = $userCart->items()
+                ->where('product_id', $guestItem->product_id)
+                ->where('size', $guestItem->size)
+                ->first();
+
+            if ($existingItem) {
+                $existingItem->quantity += $guestItem->quantity;
+                $existingItem->save();
+            } else {
+                $userCart->items()->create([
+                    'product_id' => $guestItem->product_id,
+                    'quantity' => $guestItem->quantity,
+                    'size' => $guestItem->size,
+                    'price' => $guestItem->price,
+                    'options' => $guestItem->options,
+                ]);
+            }
+        }
+
+        // Delete guest cart
+        $guestCart->delete();
     }
 
     /**
-     * Validate cart items (check stock, prices, etc.)
+     * Validate cart items
      */
     public function validate(): array
     {
-        $cart = $this->all();
         $errors = [];
+        $cart = $this->getCart();
 
-        foreach ($cart as $key => $item) {
-            $product = Product::find($item['id']);
+        foreach ($cart->items as $item) {
+            $product = $item->product;
 
             if (!$product) {
-                $errors[] = "{$item['title']} is no longer available";
-                $this->remove($key);
+                $errors[] = "Product no longer available";
+                $item->delete();
                 continue;
             }
 
             if (!$product->is_active) {
-                $errors[] = "{$item['title']} is currently unavailable";
-                $this->remove($key);
+                $errors[] = "{$product->title} is currently unavailable";
+                $item->delete();
                 continue;
             }
 
-            if ($product->stock < $item['quantity']) {
-                $errors[] = "{$item['title']} - only {$product->stock} in stock";
-                $this->update($key, $product->stock);
+            if ($product->stock < $item->quantity) {
+                $errors[] = "{$product->title} - only {$product->stock} in stock";
+                $item->quantity = $product->stock;
+                $item->save();
             }
 
-            if ($product->price != $item['price']) {
-                $errors[] = "Price for {$item['title']} has changed";
-                // Update price in cart
-                $cart[$key]['price'] = $product->price;
-                session()->put($this->sessionKey, $cart);
+            if ($product->price != $item->price) {
+                $errors[] = "Price for {$product->title} has changed";
+                $item->price = $product->price;
+                $item->save();
             }
         }
 

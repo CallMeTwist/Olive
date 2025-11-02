@@ -17,8 +17,6 @@ class CartController extends Controller
      */
     public function index()
     {
-//        \Log::info('Session in GET /cart: ', session()->all());
-//        dd(session()->get('cart.items'), session()->all());
         $items = $this->cart->all();
         $subtotal = $this->cart->subtotal();
         $tax = $this->cart->tax();
@@ -43,14 +41,13 @@ class CartController extends Controller
      */
     public function add(Request $request, Product $product)
     {
-        // ✅ Validate incoming data
         $validated = $request->validate([
             'quantity' => 'required|integer|min:1|max:100',
-            'size' => 'nullable|string|max:50',
+            'size' => 'required|string|max:50', // Make size required
         ]);
 
         $quantity = (int) $validated['quantity'];
-        $size = $validated['size'] ?? null;
+        $size = $validated['size'];
 
         // Check stock
         if ($product->stock < $quantity) {
@@ -74,33 +71,33 @@ class CartController extends Controller
             return back()->with('error', 'This product is currently unavailable.');
         }
 
-        // ✅ Add to cart with size
+        // Add to cart
         $this->cart->add($product, $quantity, $size);
 
-        // ✅ AJAX response
+        // AJAX response
         if ($request->ajax() || $request->wantsJson()) {
             return response()->json([
                 'success' => true,
-                'message' => 'Added to cart',
+                'message' => 'Added to cart successfully!',
                 'cart_count' => $this->cart->count(),
-                'cart_total' => $this->cart->total(),
+                'cart_total' => number_format($this->cart->total(), 2),
             ]);
         }
 
-        return back()->with('success', $product->title . ' added to cart!');
+        return redirect()->route('cart.index')->with('success', $product->title . ' added to cart!');
     }
 
     /**
      * Update cart item quantity
      */
-    public function update(Request $request, string $cartKey)
+    public function update(Request $request, int $cartItemId)
     {
         $request->validate([
             'quantity' => 'required|integer|min:0|max:100',
         ]);
 
         $quantity = (int) $request->input('quantity');
-        $this->cart->update($cartKey, $quantity);
+        $this->cart->update($cartItemId, $quantity);
 
         if ($request->ajax()) {
             return response()->json([
@@ -117,9 +114,9 @@ class CartController extends Controller
     /**
      * Remove item from cart
      */
-    public function remove(string $cartKey)
+    public function remove(int $cartItemId)
     {
-        $this->cart->remove($cartKey);
+        $this->cart->remove($cartItemId);
 
         if (request()->ajax()) {
             return response()->json([

@@ -39,17 +39,24 @@
 {{--                                {{dd($items)}}--}}
 
                                 <div class="cart-table-data">
-                                    @foreach($items as $key => $item)
-                                        <div class="cart-table-info ptb-30 beb" data-animate="animate__fadeIn" data-cart-key="{{ $key }}">
+                                    @forelse($items as $item)
+                                        <div class="cart-table-info ptb-30 beb" data-animate="animate__fadeIn" data-cart-item-id="{{ $item->id }}">
                                             <div class="row row-mtm30">
                                                 <div class="col-12 col-md-5">
                                                     <div class="cart-item-content d-flex flex-wrap">
                                                         <div class="cart-item-image width-88">
-                                                            <img src="{{ asset('storage/' . $item['image']) }}" class="w-100 img-fluid border-radius" alt="{{ $item['title'] }}">
+                                                            @if($item->product && $item->product->primaryImage)
+                                                                <img src="{{ Storage::url($item->product->primaryImage->path) }}"
+                                                                     class="w-100 img-fluid border-radius"
+                                                                     alt="{{ $item->product->title }}">
+                                                            @endif
                                                         </div>
                                                         <div class="cart-item-info width-calc-88 psl-15">
-                                                            <span class="dominant-link heading-weight">{{ $item['title'] }}</span>
-                                                            <span class="d-block mst-8 heading-color heading-weight">₦{{ number_format($item['price'], 2) }}</span>
+                                                            <span class="dominant-link heading-weight">{{ $item->product->title ?? 'Product unavailable' }}</span>
+                                                            @if($item->size)
+                                                                <span class="d-block mst-8">Size: {{ $item->size }}</span>
+                                                            @endif
+                                                            <span class="d-block mst-8 heading-color heading-weight">₦{{ number_format($item->price, 2) }}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -58,14 +65,15 @@
                                                     <input
                                                         type="number"
                                                         class="js-qty-num cart-qty-input p-0 text-center border-0"
-                                                        value="{{ $item['quantity'] }}"
+                                                        value="{{ $item->quantity }}"
                                                         min="1"
-                                                        data-cart-key="{{ $key }}">
+                                                        max="{{ $item->product->stock ?? 100 }}"
+                                                        data-cart-item-id="{{ $item->id }}">
                                                 </div>
 
                                                 <div class="col-3 col-sm-4 col-md-2">
                                                     <div class="cart-total-price heading-color heading-weight">
-                                                        ₦{{ number_format($item['price'] * $item['quantity'], 2) }}
+                                                        ₦{{ number_format($item->subtotal, 2) }}
                                                     </div>
                                                 </div>
 
@@ -73,13 +81,18 @@
                                                     <button
                                                         type="button"
                                                         class="cart-remove text-danger icon-16"
-                                                        data-cart-key="{{ $key }}">
+                                                        data-cart-item-id="{{ $item->id }}">
                                                         <i class="ri-delete-bin-line d-block lh-1"></i>
                                                     </button>
                                                 </div>
                                             </div>
                                         </div>
-                                    @endforeach
+                                    @empty
+                                        <div class="text-center py-5">
+                                            <p>Your cart is empty</p>
+                                            <a href="{{ route('store.index') }}" class="btn btn-primary">Continue Shopping</a>
+                                        </div>
+                                    @endforelse
 
                                     <div class="cart-table-info ptb-30 beb" data-animate="animate__fadeIn">
                                         <div class="row row-mtm30">

@@ -24,7 +24,7 @@ Route::prefix('store')->name('store.')->group(function () {
 Route::prefix('cart')->name('cart.')->group(function () {
     Route::get('/', [CartController::class, 'index'])->name('index');
     Route::post('/add/{product}', [CartController::class, 'add'])->name('add');
-    Route::patch('/update/{cartKey}', [CartController::class, 'update'])->name('update'); // ✅ ADD THIS
+    Route::patch('/update/{cartKey}', [CartController::class, 'update'])->name('update');
     Route::delete('/remove/{cartKey}', [CartController::class, 'remove'])->name('remove');
     Route::post('/clear', [CartController::class, 'clear'])->name('clear');
 });
