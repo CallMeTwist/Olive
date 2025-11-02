@@ -94,7 +94,7 @@
                                         {{-- ✅ EMPTY STATE --}}
                                         <div class="text-center py-5">
                                             <p>Your cart is empty 🛒</p>
-                                            <a href="{{ route('store.index') }}" class="btn btn-primary">Continue Shopping</a>
+{{--                                            <a href="{{ route('store.index') }}" class="btn btn-primary">Continue Shopping</a>--}}
                                         </div>
                                     @endforelse
 
@@ -125,11 +125,13 @@
                                                 <div class="cart-detail mst-23">
                                                     <div class="cart-detail-info">
                                                         <!-- cart-info discount-code start -->
+                                                        @if($savings > 0)
                                                         <div class="ul-mt5 align-items-center heading-weight">
                                                             <span class="text-danger"><i class="ri-price-tag-3-line d-block icon-16 lh-1"></i></span>
-                                                            <span class="text-danger">11%OFF</span>
+                                                            <span class="text-danger">{{$percentSaving}}%</span>
                                                             <span class="heading-color">applied</span>
                                                         </div>
+                                                        @endif
                                                         <!-- cart-info discount-code end -->
                                                     </div>
                                                     <div class="cart-detail-form d-none">
@@ -149,31 +151,60 @@
                                             </div>
                                         </div>
                                         <div class="cart-costview">
+                                            {{-- Summary section --}}
                                             <div class="cart-cost pst-30 mst-30 bst">
                                                 <div class="row row-mtm20">
+
+                                                    {{-- Subtotal --}}
                                                     <div class="col-12 d-flex justify-content-between">
                                                         <span>Subtotal</span>
-                                                        <span class="heading-color heading-weight">$246.00</span>
+                                                        <span class="heading-color heading-weight">
+                                                            ₦{{ number_format($subtotal, 2) }}
+                                                        </span>
                                                     </div>
-                                                    <div class="col-12 d-flex justify-content-between">
-                                                        <span>Discount</span>
-                                                        <span class="text-danger heading-weight">$11.00</span>
-                                                    </div>
+
+                                                    {{-- Savings / Discount --}}
+{{--                                                    <div class="col-12 d-flex justify-content-between">--}}
+{{--                                                        <span>Discount</span>--}}
+
+{{--                                                        @if($percentSaving > 0)--}}
+{{--                                                            <span class="text-danger heading-weight">--}}
+{{--                                                                -{{ number_format($percentSaving, 1) }}% Off--}}
+{{--                                                            </span>--}}
+{{--                                                        @else--}}
+{{--                                                            <span class="text-muted heading-weight">—</span>--}}
+{{--                                                        @endif--}}
+{{--                                                    </div>--}}
+
+
+                                                    {{-- Shipping --}}
                                                     <div class="col-12 d-flex justify-content-between">
                                                         <span>Shipping</span>
-                                                        <span class="text-success heading-weight">$0.00</span>
+                                                        <span class="font-12 heading-weight">
+                                                            @if($shipping > 0)
+                                                                ₦{{ number_format($shipping, 2) }}
+                                                            @else
+                                                                may vary
+                                                            @endif
+                                                            </span>
                                                     </div>
+
                                                 </div>
                                             </div>
+
+                                            {{-- Total section --}}
                                             <div class="cart-cost pst-30 mst-30 bst">
                                                 <div class="row row-mtm20">
                                                     <div class="col-12 d-flex justify-content-between">
                                                         <span>Total</span>
-                                                        <span class="heading-color heading-weight">$235.00</span>
+                                                        <span class="heading-color heading-weight">
+                                                            ₦{{ number_format($total, 2) }}
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="cart-button mst-30">
                                             <a href="checkout.html" class="w-100 btn-style secondary-btn">Checkout</a>
                                             <span class="d-block font-12 mst-12">Taxes excluded at checkout*</span>

@@ -1513,6 +1513,7 @@
 <script src="{{asset('/assets/js/plugin.js')}}"></script>
 <!-- other js -->
 @stack('cart-js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- theme js -->
 <script src="{{asset('/assets/js/theme.js')}}"></script>
 </body>

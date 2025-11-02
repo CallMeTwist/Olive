@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Session;
 
 class CartService
 {
+//    protected $cart;
+//
+//    public function __construct()
+//    {
+//        $this->cart = $this->getCart();
+//    }
     /**
      * Get or create cart for current user/session
      */
@@ -129,7 +135,7 @@ class CartService
     /**
      * Calculate tax
      */
-    public function tax(): float
+    public function tax()
     {
         return $this->getCart()->tax;
     }
@@ -140,6 +146,14 @@ class CartService
     public function shipping(): float
     {
         return $this->getCart()->shipping;
+    }
+
+    /**
+     * Calculate percentage savings
+     */
+    public function percentSaving()
+    {
+        return $this->getCart()->percent_savings;
     }
 
     /**

@@ -23,6 +23,7 @@ class CartController extends Controller
         $shipping = $this->cart->shipping();
         $total = $this->cart->total();
         $savings = $this->cart->savings();
+        $percentSaving = $this->cart->percentSaving();
         $count = $this->cart->count();
 
         return view('cart.index', compact(
@@ -32,7 +33,8 @@ class CartController extends Controller
             'shipping',
             'total',
             'savings',
-            'count'
+            'count',
+            'percentSaving',
         ));
     }
 
