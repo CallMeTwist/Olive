@@ -132,9 +132,15 @@ class CartController extends Controller
     /**
      * Clear entire cart
      */
-    public function clear()
+    public function clear(Request $request)
     {
         $this->cart->clear();
+
+        // Always redirect for non-AJAX requests
+        if (!$request->ajax() && !$request->wantsJson()) {
+            return redirect()->route('cart.index')->with('success', 'Cart cleared!');
+        }
+
 
         if (request()->ajax()) {
             return response()->json([

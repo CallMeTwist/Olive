@@ -35,148 +35,82 @@
                                         <div class="col-md-2 heading-color heading-weight text-end">Option</div>
                                     </div>
                                 </div>
-
-{{--                                {{dd($items)}}--}}
-
                                 <div class="cart-table-data">
                                     @forelse($items as $item)
-                                        <div class="cart-table-info ptb-30 beb" data-animate="animate__fadeIn" data-cart-item-id="{{ $item->id }}">
-                                            <div class="row row-mtm30">
-                                                <div class="col-12 col-md-5">
-                                                    <div class="cart-item-content d-flex flex-wrap">
-                                                        <div class="cart-item-image width-88">
-                                                            @if($item->product && $item->product->primaryImage)
-                                                                <img src="{{ Storage::url($item->product->primaryImage->path) }}"
-                                                                     class="w-100 img-fluid border-radius"
-                                                                     alt="{{ $item->product->title }}">
-                                                            @endif
-                                                        </div>
-                                                        <div class="cart-item-info width-calc-88 psl-15">
-                                                            <span class="dominant-link heading-weight">{{ $item->product->title ?? 'Product unavailable' }}</span>
-                                                            @if($item->size)
-                                                                <span class="d-block mst-8">Size: {{ $item->size }}</span>
-                                                            @endif
-                                                            <span class="d-block mst-8 heading-color heading-weight">₦{{ number_format($item->price, 2) }}</span>
-                                                        </div>
+                                    <div class="cart-table-info ptb-30 beb" data-animate="animate__fadeIn">
+                                        <div class="row row-mtm30">
+                                            <div class="col-12 col-md-5">
+                                                <div class="d-md-none heading-color heading-weight meb-11">Product</div>
+                                                <div class="cart-item-content d-flex flex-wrap">
+                                                    <div class="cart-item-image width-88">
+{{--                                                        <a href="#" class="d-block br-hidden"><img src="" class="w-100 img-fluid" alt="cart-1"></a>--}}
+
+                                                        @if($item->product && $item->product->primaryImage)
+                                                            <img src="{{ Storage::url($item->product->primaryImage->path) }}"
+                                                                 class="w-100 img-fluid border-radius"
+                                                                 alt="{{ $item->product->title }}">
+                                                        @endif
                                                     </div>
-                                                </div>
-
-                                                <div class="col-6 col-sm-4 col-md-3">
-                                                    <input
-                                                        type="number"
-                                                        class="js-qty-num cart-qty-input p-0 text-center border-0"
-                                                        value="{{ $item->quantity }}"
-                                                        min="1"
-                                                        max="{{ $item->product->stock ?? 100 }}"
-                                                        data-cart-item-id="{{ $item->id }}">
-                                                </div>
-
-                                                <div class="col-3 col-sm-4 col-md-2">
-                                                    <div class="cart-total-price heading-color heading-weight">
-                                                        ₦{{ number_format($item->subtotal, 2) }}
+                                                    <div class="cart-item-info width-calc-88 psl-15">
+                                                        <span class="dominant-link heading-weight">{{ $item->product->title ?? 'Product unavailable' }}</span>
+                                                        @if($item->size)
+                                                            <span class="d-block mst-8">Size: {{ $item->size }}</span>
+                                                        @endif
+                                                        <span class="d-block mst-8 heading-color heading-weight">₦{{ number_format($item->price, 2) }}</span>
                                                     </div>
-                                                </div>
-
-                                                <div class="col-3 col-sm-4 col-md-2 text-end">
-                                                    <button
-                                                        type="button"
-                                                        class="cart-remove text-danger icon-16"
-                                                        data-cart-item-id="{{ $item->id }}">
-                                                        <i class="ri-delete-bin-line d-block lh-1"></i>
-                                                    </button>
                                                 </div>
                                             </div>
+                                            <div class="col-6 col-sm-4 col-md-3">
+                                                <div class="d-md-none heading-color heading-weight meb-11">Qty</div>
+                                                <div class="js-qty-wrapper">
+                                                    <div class="js-qty-wrap d-flex extra-bg border-full br-hidden">
+                                                        <button type="button" class="js-qty-adjust js-qty-adjust-minus body-color icon-16" aria-label="Remove item"><i class="ri-subtract-line d-block lh-1"></i></button>
+                                                        <input
+                                                            type="number"
+                                                            class="js-qty-num cart-qty-input p-0 text-center border-0"
+                                                            value="{{ $item->quantity }}"
+                                                            min="1"
+                                                            max="{{ $item->product->stock ?? 100 }}"
+                                                            data-cart-item-id="{{ $item->id }}">
+                                                        <button type="button" class="js-qty-adjust js-qty-adjust-plus body-color icon-16" aria-label="Add item"><i class="ri-add-line d-block lh-1"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-3 col-sm-4 col-md-2">
+                                                <div class="d-md-none heading-color heading-weight meb-9">Total</div>
+                                                <div class="cart-total-price heading-color heading-weight">₦{{ number_format($item->subtotal, 2) }}</div>
+                                            </div>
+                                            <div class="col-3 col-sm-4 col-md-2 text-end">
+                                                <button
+                                                    type="button"
+                                                    class="cart-remove text-danger icon-16"
+                                                    data-cart-item-id="{{ $item->id }}">
+                                                    <i class="ri-delete-bin-line d-block lh-1"></i>
+                                                </button>
+                                            </div>
                                         </div>
+                                    </div>
                                     @empty
+                                        {{-- ✅ EMPTY STATE --}}
                                         <div class="text-center py-5">
-                                            <p>Your cart is empty</p>
+                                            <p>Your cart is empty 🛒</p>
                                             <a href="{{ route('store.index') }}" class="btn btn-primary">Continue Shopping</a>
                                         </div>
                                     @endforelse
 
-                                    <div class="cart-table-info ptb-30 beb" data-animate="animate__fadeIn">
-                                        <div class="row row-mtm30">
-                                            <div class="col-12 col-md-5">
-                                                <div class="d-md-none heading-color heading-weight meb-11">Product</div>
-                                                <div class="cart-item-content d-flex flex-wrap">
-                                                    <div class="cart-item-image width-88">
-                                                        <a href="product.html" class="d-block br-hidden"><img src="assets/image/cart/cart-1.jpg" class="w-100 img-fluid" alt="cart-1"></a>
-                                                    </div>
-                                                    <div class="cart-item-info width-calc-88 psl-15">
-                                                        <a href="product.html" class="dominant-link heading-weight">Gleam band</a>
-                                                        <span class="d-block mst-8">16cm / Aliceblue</span>
-                                                        <span class="d-block mst-8 heading-color heading-weight">$79.00</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 col-sm-4 col-md-3">
-                                                <div class="d-md-none heading-color heading-weight meb-11">Qty</div>
-                                                <div class="js-qty-wrapper">
-                                                    <div class="js-qty-wrap d-flex extra-bg border-full br-hidden">
-                                                        <button type="button" class="js-qty-adjust js-qty-adjust-minus body-color icon-16" aria-label="Remove item"><i class="ri-subtract-line d-block lh-1"></i></button>
-                                                        <input type="number" name="gleam-band-s-red" class="js-qty-num p-0 text-center border-0" value="1" min="1">
-                                                        <button type="button" class="js-qty-adjust js-qty-adjust-plus body-color icon-16" aria-label="Add item"><i class="ri-add-line d-block lh-1"></i></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-3 col-sm-4 col-md-2">
-                                                <div class="d-md-none heading-color heading-weight meb-9">Total</div>
-                                                <div class="cart-total-price heading-color heading-weight">$79.00</div>
-                                            </div>
-                                            <div class="col-3 col-sm-4 col-md-2 text-end">
-                                                <div class="d-md-none heading-color heading-weight meb-11">Option</div>
-                                                <button type="submit" class="cart-remove text-danger icon-16" aria-label="Remove item"><i class="ri-delete-bin-line d-block lh-1"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="cart-table-info ptb-30 beb" data-animate="animate__fadeIn">
-                                        <div class="row row-mtm30">
-                                            <div class="col-12 col-md-5">
-                                                <div class="d-md-none heading-color heading-weight meb-11">Product</div>
-                                                <div class="cart-item-content d-flex flex-wrap">
-                                                    <div class="cart-item-image width-88">
-                                                        <a href="product.html" class="d-block br-hidden"><img src="assets/image/cart/cart-1.jpg" class="w-100 img-fluid" alt="cart-1"></a>
-                                                    </div>
-                                                    <div class="cart-item-info width-calc-88 psl-15">
-                                                        <a href="product.html" class="dominant-link heading-weight">Gleam band</a>
-                                                        <span class="d-block mst-8">16cm / Aliceblue</span>
-                                                        <span class="d-block mst-8 heading-color heading-weight">$79.00</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-6 col-sm-4 col-md-3">
-                                                <div class="d-md-none heading-color heading-weight meb-11">Qty</div>
-                                                <div class="js-qty-wrapper">
-                                                    <div class="js-qty-wrap d-flex extra-bg border-full br-hidden">
-                                                        <button type="button" class="js-qty-adjust js-qty-adjust-minus body-color icon-16" aria-label="Remove item"><i class="ri-subtract-line d-block lh-1"></i></button>
-                                                        <input type="number" name="gleam-band-s-red" class="js-qty-num p-0 text-center border-0" value="1" min="1">
-                                                        <button type="button" class="js-qty-adjust js-qty-adjust-plus body-color icon-16" aria-label="Add item"><i class="ri-add-line d-block lh-1"></i></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-3 col-sm-4 col-md-2">
-                                                <div class="d-md-none heading-color heading-weight meb-9">Total</div>
-                                                <div class="cart-total-price heading-color heading-weight">$79.00</div>
-                                            </div>
-                                            <div class="col-3 col-sm-4 col-md-2 text-end">
-                                                <div class="d-md-none heading-color heading-weight meb-11">Option</div>
-                                                <button type="submit" class="cart-remove text-danger icon-16" aria-label="Remove item"><i class="ri-delete-bin-line d-block lh-1"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-
+                                </div>
                             </div>
-
-
-
-
-                        </div>
                         <div class="cart-summaryview">
                             <div class="row row-mtm align-items-lg-start">
                                 <div class="col-12 col-lg-8 p-lg-sticky top-0" data-animate="animate__fadeIn">
                                     <div class="cart-summary-button d-flex flex-wrap justify-content-sm-between">
-                                        <a href="collection.html" class="width-100 width-sm-auto btn-style quaternary-btn">Continue shopping</a>
-                                        <a href="cart-empty.html" class="width-100 width-sm-auto btn-style secondary-btn mst-15 mst-sm-0">Clear cart</a>
+                                        <a href="{{ route('store.index') }}" class="width-100 width-sm-auto btn-style quaternary-btn">Continue shopping</a>
+{{--                                        <a href="{{route('cart.clear')}}" class="width-100 width-sm-auto btn-style secondary-btn mst-15 mst-sm-0">Clear cart</a>--}}
+                                        <form action="{{ route('cart.clear') }}" method="POST" onsubmit="return confirm('Are you sure you want to clear your cart?')">
+                                            @csrf
+                                            <button type="submit" class="clear-cart-btn btn-style secondary-btn">Clear cart</button>
+                                        </form>
+
                                     </div>
                                 </div>
                                 <div class="col-12 col-lg-4 p-lg-sticky top-0" data-animate="animate__fadeIn">
@@ -249,7 +183,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                    </div>
                 </div>
             </form>
 

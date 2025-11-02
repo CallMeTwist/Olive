@@ -32,22 +32,22 @@ Route::prefix('cart')->name('cart.')->group(function () {
 Route::get('/checkout', [CheckoutController::class, 'redirectToWhatsApp'])->name('checkout.whatsapp');
 
 
-Route::get('/test-session', function() {
-    // Set a test value
-    session()->put('test', 'Session is working!');
-    session()->save();
-
-    // Get the value
-    $test = session()->get('test');
-
-    // Check cart
-    $cart = session()->get('cart.items', []);
-
-    return response()->json([
-        'test_value' => $test,
-        'cart_items' => $cart,
-        'all_session' => session()->all(),
-        'session_id' => session()->getId(),
-    ]);
-});
+//Route::get('/test-session', function() {
+//    // Set a test value
+//    session()->put('test', 'Session is working!');
+//    session()->save();
+//
+//    // Get the value
+//    $test = session()->get('test');
+//
+//    // Check cart
+//    $cart = session()->get('cart.items', []);
+//
+//    return response()->json([
+//        'test_value' => $test,
+//        'cart_items' => $cart,
+//        'all_session' => session()->all(),
+//        'session_id' => session()->getId(),
+//    ]);
+//});
 
