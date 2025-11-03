@@ -158,7 +158,7 @@
                                                     {{-- Subtotal --}}
                                                     <div class="col-12 d-flex justify-content-between">
                                                         <span>Subtotal</span>
-                                                        <span class="heading-color heading-weight">
+                                                        <span class="cart-subtotal heading-color heading-weight">
                                                             ₦{{ number_format($subtotal, 2) }}
                                                         </span>
                                                     </div>
@@ -192,12 +192,13 @@
                                                 </div>
                                             </div>
 
+{{--                                            {{dd($total)}}--}}
                                             {{-- Total section --}}
                                             <div class="cart-cost pst-30 mst-30 bst">
                                                 <div class="row row-mtm20">
                                                     <div class="col-12 d-flex justify-content-between">
                                                         <span>Total</span>
-                                                        <span class="heading-color heading-weight">
+                                                        <span class="cart-grand-total heading-color heading-weight">
                                                             ₦{{ number_format($total, 2) }}
                                                         </span>
                                                     </div>

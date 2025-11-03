@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\CartItem;
 use App\Services\CartService;
 use Illuminate\Http\Request;
 
@@ -45,23 +46,13 @@ class CartController extends Controller
     {
         $validated = $request->validate([
             'quantity' => 'required|integer|min:1|max:100',
-            'size' => 'required|string|max:50', // Make size required
+            'size' => 'required|string|max:50',
         ]);
 
         $quantity = (int) $validated['quantity'];
         $size = $validated['size'];
 
         // Check stock
-//        if ($product->stock < $quantity) {
-//            if ($request->ajax()) {
-//                return response()->json([
-//                    'success' => false,
-//                    'message' => 'Not enough stock available. Only ' . $product->stock . ' left.'
-//                ], 400);
-//            }
-//            return back()->with('error', 'Not enough stock available. Only ' . $product->stock . ' left.');
-//        }
-        //check stock v2
         if ($product->stock < $quantity) {
             return response()->json([
                 'success' => false,
@@ -71,12 +62,10 @@ class CartController extends Controller
 
         // Check if product is active
         if (!$product->is_active) {
-            if ($request->ajax()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'This product is currently unavailable.'
-                ], 400);
-            }
+            return response()->json([
+                'success' => false,
+                'message' => 'This product is currently unavailable.'
+            ], 400);
         }
 
         // Add to cart
@@ -89,22 +78,11 @@ class CartController extends Controller
             'subtotal' => $this->cart->subtotal(),
             'total' => $this->cart->total(),
         ]);
-
-//        // AJAX response
-//        if ($request->ajax() || $request->wantsJson()) {
-//            return response()->json([
-//                'success' => true,
-//                'message' => 'Added to cart successfully!',
-//                'cart_count' => $this->cart->count(),
-//                'cart_total' => number_format($this->cart->total(), 2),
-//            ]);
-//        }
-//
-//        return redirect()->route('cart.index')->with('success', $product->title . ' added to cart!');
     }
 
     /**
      * Update cart item quantity
+     * FIXED: Added cartItem retrieval and item_subtotal calculation
      */
     public function update(Request $request, int $cartItemId)
     {
@@ -115,23 +93,18 @@ class CartController extends Controller
         $quantity = (int) $request->input('quantity');
         $this->cart->update($cartItemId, $quantity);
 
-//        if ($request->ajax()) {
-//            return response()->json([
-//                'success' => true,
-//                'subtotal' => number_format($this->cart->subtotal(), 2),
-//                'total' => number_format($this->cart->total(), 2),
-//                'cart_count' => $this->cart->count(),
-//            ]);
-//        }
-//
-//        return back()->with('success', 'Cart updated!');
+        // FIXED: Retrieve the cart item to get its subtotal
+        $cartItem = CartItem::find($cartItemId);
+        $itemSubtotal = $cartItem ? ($cartItem->price * $cartItem->quantity) : 0;
+
         return response()->json([
             'success' => true,
             'cart_count' => $this->cart->count(),
             'subtotal' => $this->cart->subtotal(),
             'total' => $this->cart->total(),
-            'item_subtotal' => $cartItem->subtotal ?? 0,
+            'item_subtotal' => $itemSubtotal,
         ]);
+
     }
 
     /**
@@ -141,15 +114,6 @@ class CartController extends Controller
     {
         $this->cart->remove($cartItemId);
 
-//        if (request()->ajax()) {
-//            return response()->json([
-//                'success' => true,
-//                'cart_count' => $this->cart->count(),
-//                'cart_total' => number_format($this->cart->total(), 2),
-//            ]);
-//        }
-//
-//        return back()->with('success', 'Item removed from cart!');
         return response()->json([
             'success' => true,
             'cart_count' => $this->cart->count(),
@@ -161,22 +125,10 @@ class CartController extends Controller
     /**
      * Clear entire cart
      */
-    public function clear(Request $request)
+    public function clear()
     {
         $this->cart->clear();
 
-//        // Always redirect for non-AJAX requests
-//        if (!$request->ajax() && !$request->wantsJson()) {
-//            return redirect()->route('cart.index')->with('success', 'Cart cleared!');
-//        }
-//        if (request()->ajax()) {
-//            return response()->json([
-//                'success' => true,
-//                'message' => 'Cart cleared!'
-//            ]);
-//        }
-//
-//        return back()->with('success', 'Cart cleared!');
         return response()->json([
             'success' => true,
             'message' => 'Cart cleared!',

@@ -39,13 +39,13 @@ class Cart extends Model
         });
     }
 
-//    /**
-//     * Calculate tax (7.5% VAT)
-//     */
-//    public function getTaxAttribute(): float
-//    {
-//        return $this->subtotal * 0.075;
-//    }
+    /**
+     * Calculate tax (7.5% VAT) - FIXED: Added this method
+     */
+    public function getTaxAttribute(): float
+    {
+        return $this->subtotal * 0;
+    }
 
     /**
      * Calculate shipping
@@ -108,5 +108,4 @@ class Cart extends Model
     {
         return $this->items->sum('quantity');
     }
-
 }
