@@ -52,14 +52,21 @@ class CartController extends Controller
         $size = $validated['size'];
 
         // Check stock
+//        if ($product->stock < $quantity) {
+//            if ($request->ajax()) {
+//                return response()->json([
+//                    'success' => false,
+//                    'message' => 'Not enough stock available. Only ' . $product->stock . ' left.'
+//                ], 400);
+//            }
+//            return back()->with('error', 'Not enough stock available. Only ' . $product->stock . ' left.');
+//        }
+        //check stock v2
         if ($product->stock < $quantity) {
-            if ($request->ajax()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Not enough stock available. Only ' . $product->stock . ' left.'
-                ], 400);
-            }
-            return back()->with('error', 'Not enough stock available. Only ' . $product->stock . ' left.');
+            return response()->json([
+                'success' => false,
+                'message' => 'Not enough stock available. Only ' . $product->stock . ' left.'
+            ], 400);
         }
 
         // Check if product is active
@@ -70,23 +77,30 @@ class CartController extends Controller
                     'message' => 'This product is currently unavailable.'
                 ], 400);
             }
-            return back()->with('error', 'This product is currently unavailable.');
         }
 
         // Add to cart
         $this->cart->add($product, $quantity, $size);
 
-        // AJAX response
-        if ($request->ajax() || $request->wantsJson()) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Added to cart successfully!',
-                'cart_count' => $this->cart->count(),
-                'cart_total' => number_format($this->cart->total(), 2),
-            ]);
-        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Added to cart successfully!',
+            'cart_count' => $this->cart->count(),
+            'subtotal' => $this->cart->subtotal(),
+            'total' => $this->cart->total(),
+        ]);
 
-        return redirect()->route('cart.index')->with('success', $product->title . ' added to cart!');
+//        // AJAX response
+//        if ($request->ajax() || $request->wantsJson()) {
+//            return response()->json([
+//                'success' => true,
+//                'message' => 'Added to cart successfully!',
+//                'cart_count' => $this->cart->count(),
+//                'cart_total' => number_format($this->cart->total(), 2),
+//            ]);
+//        }
+//
+//        return redirect()->route('cart.index')->with('success', $product->title . ' added to cart!');
     }
 
     /**
@@ -101,16 +115,23 @@ class CartController extends Controller
         $quantity = (int) $request->input('quantity');
         $this->cart->update($cartItemId, $quantity);
 
-        if ($request->ajax()) {
-            return response()->json([
-                'success' => true,
-                'subtotal' => number_format($this->cart->subtotal(), 2),
-                'total' => number_format($this->cart->total(), 2),
-                'cart_count' => $this->cart->count(),
-            ]);
-        }
-
-        return back()->with('success', 'Cart updated!');
+//        if ($request->ajax()) {
+//            return response()->json([
+//                'success' => true,
+//                'subtotal' => number_format($this->cart->subtotal(), 2),
+//                'total' => number_format($this->cart->total(), 2),
+//                'cart_count' => $this->cart->count(),
+//            ]);
+//        }
+//
+//        return back()->with('success', 'Cart updated!');
+        return response()->json([
+            'success' => true,
+            'cart_count' => $this->cart->count(),
+            'subtotal' => $this->cart->subtotal(),
+            'total' => $this->cart->total(),
+            'item_subtotal' => $cartItem->subtotal ?? 0,
+        ]);
     }
 
     /**
@@ -120,15 +141,21 @@ class CartController extends Controller
     {
         $this->cart->remove($cartItemId);
 
-        if (request()->ajax()) {
-            return response()->json([
-                'success' => true,
-                'cart_count' => $this->cart->count(),
-                'cart_total' => number_format($this->cart->total(), 2),
-            ]);
-        }
-
-        return back()->with('success', 'Item removed from cart!');
+//        if (request()->ajax()) {
+//            return response()->json([
+//                'success' => true,
+//                'cart_count' => $this->cart->count(),
+//                'cart_total' => number_format($this->cart->total(), 2),
+//            ]);
+//        }
+//
+//        return back()->with('success', 'Item removed from cart!');
+        return response()->json([
+            'success' => true,
+            'cart_count' => $this->cart->count(),
+            'subtotal' => $this->cart->subtotal(),
+            'total' => $this->cart->total(),
+        ]);
     }
 
     /**
@@ -138,19 +165,24 @@ class CartController extends Controller
     {
         $this->cart->clear();
 
-        // Always redirect for non-AJAX requests
-        if (!$request->ajax() && !$request->wantsJson()) {
-            return redirect()->route('cart.index')->with('success', 'Cart cleared!');
-        }
-
-
-        if (request()->ajax()) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Cart cleared!'
-            ]);
-        }
-
-        return back()->with('success', 'Cart cleared!');
+//        // Always redirect for non-AJAX requests
+//        if (!$request->ajax() && !$request->wantsJson()) {
+//            return redirect()->route('cart.index')->with('success', 'Cart cleared!');
+//        }
+//        if (request()->ajax()) {
+//            return response()->json([
+//                'success' => true,
+//                'message' => 'Cart cleared!'
+//            ]);
+//        }
+//
+//        return back()->with('success', 'Cart cleared!');
+        return response()->json([
+            'success' => true,
+            'message' => 'Cart cleared!',
+            'cart_count' => 0,
+            'subtotal' => 0,
+            'total' => 0,
+        ]);
     }
 }
