@@ -29,7 +29,8 @@ Route::prefix('cart')->name('cart.')->group(function () {
     Route::post('/clear', [CartController::class, 'clear'])->name('clear');
 });
 
-Route::get('/checkout', [CheckoutController::class, 'redirectToWhatsApp'])->name('checkout.whatsapp');
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::post('/checkout/whatsapp', [CheckoutController::class, 'whatsapp'])->name('checkout.whatsapp');
 
 
 //Route::get('/test-session', function() {

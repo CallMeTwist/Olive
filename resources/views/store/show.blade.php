@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/store-custom.css') }}">
 @endpush
 
-@push('cart-js')
+@push('scripts')
     <script src="{{asset('/assets/js/cart.js')}}"></script>
 @endpush
 

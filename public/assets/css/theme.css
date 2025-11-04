@@ -2612,4 +2612,6 @@ label.cust-switch-label input:checked ~ span.cust-switch-slide::before {
 [data-animate].animate__animated {
     opacity: 1
 }
+
+
 /************************************* animation css end *************************************/

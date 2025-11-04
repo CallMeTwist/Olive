@@ -33,6 +33,7 @@ class CheckoutController extends Controller
         $shipping = $this->cart->shipping();
         $total = $this->cart->total();
         $savings = $this->cart->savings();
+        $percentSaving = $this->cart->percentSaving();
 
         return view('checkout.index', compact(
             'items',
@@ -40,7 +41,8 @@ class CheckoutController extends Controller
             'tax',
             'shipping',
             'total',
-            'savings'
+            'savings',
+            'percentSaving'
         ));
     }
 
@@ -52,7 +54,6 @@ class CheckoutController extends Controller
         if ($this->cart->isEmpty()) {
             return redirect()->route('cart.index')->with('error', 'Your cart is empty.');
         }
-
 
         // Validate cart
         $errors = $this->cart->validate();
@@ -74,22 +75,28 @@ class CheckoutController extends Controller
 
         // Create order items
         foreach ($this->cart->all() as $item) {
-            $order->items()->create([
-                'product_id' => $item['product_id'],
-                'product_title' => $item['title'],
-                'sku' => $item['sku'],
-                'size' => $item['size'],
-                'price' => $item['price'],
-                'quantity' => $item['quantity'],
-                'subtotal' => $item['price'] * $item['quantity'],
+            $product = $item->product;
+
+            // Skip if product doesn't exist
+            if (!$product) {
+                continue;
+            }
+
+            $orderItem = $order->items()->create([
+                'product_id' => $item->product_id,
+                'product_title' => $product->title,  // ✅ Get from product relationship
+                'sku' => $product->sku,               // ✅ Get from product relationship
+                'size' => $item->size,
+                'price' => $item->price,
+                'quantity' => $item->quantity,
+                'subtotal' => $item->price * $item->quantity,
             ]);
 
-            //Reserve stock
-            $order->items()->product->decrememt('stock', $item['quantity']);
+            // Reserve stock
+            $product->decrement('stock', $item->quantity);
         }
 
         $whatsappNumber = config('services.whatsapp.number');
-
         if (!$whatsappNumber) {
             return back()->with('error', 'WhatsApp number not configured.');
         }
@@ -100,14 +107,12 @@ class CheckoutController extends Controller
         $order->update(['whatsapp_message' => $message]);
 
         $encoded = rawurlencode($message);
-        $url = "<https://wa.me/{$whatsappNumber}?text={$encoded}>";
+        $url = "https://wa.me/{$whatsappNumber}?text={$encoded}";
 
         // Clear cart after creating order
         $this->cart->clear();
 
         return redirect()->away($url);
-
-
     }
 
     /**

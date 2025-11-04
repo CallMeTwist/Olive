@@ -1,7 +1,7 @@
 @extends('layouts.master', [
 ])
 
-@push('cart-js')
+@push('scripts')
     <script src="{{asset('/assets/js/cart.js')}}"></script>
 @endpush
 
@@ -207,7 +207,7 @@
                                         </div>
 
                                         <div class="cart-button mst-30">
-                                            <a href="checkout.html" class="w-100 btn-style secondary-btn">Checkout</a>
+                                            <a href="{{route('checkout.index')}}" class="w-100 btn-style secondary-btn">Checkout</a>
                                             <span class="d-block font-12 mst-12">Taxes excluded at checkout*</span>
                                         </div>
                                     </div>

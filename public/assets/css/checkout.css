@@ -1,0 +1,41 @@
+.working-on-section {
+    background-color: #fff;
+    border: 1px solid #e5e1dc;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.working-on-section:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+.btn-whatsapp {
+    background-color: #5b6543;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-whatsapp:hover {
+    background-color: #6f7a4e;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.working-pointer {
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.working-animation {
+    animation: floaty 3s ease-in-out infinite;
+}
+
+@keyframes floaty {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
