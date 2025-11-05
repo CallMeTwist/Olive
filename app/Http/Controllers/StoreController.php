@@ -13,35 +13,102 @@ class StoreController extends Controller
         $query = Product::with(['primaryImage', 'category', 'images'])
             ->where('is_active', true);
 
-        if ($request->has('category') && $request->category) {
+        // Category filter
+        if ($request->filled('category') && $request->category !== 'all') {
             $query->where('category_id', $request->category);
         }
 
-        if ($request->has('search') && $request->search) {
+        // Search filter
+        if ($request->filled('search')) {
             $query->where(function($q) use ($request) {
                 $q->where('title', 'like', '%' . $request->search . '%')
-                    ->orWhere('description', 'like', '%' . $request->search . '%');
+                    ->orWhere('description', 'like', '%' . $request->search . '%')
+                    ->orWhere('sku', 'like', '%' . $request->search . '%');
             });
         }
 
+        // Availability filter
+        if ($request->filled('availability')) {
+            if ($request->availability === 'in-stock') {
+                $query->where('stock', '>', 0);
+            } elseif ($request->availability === 'out-of-stock') {
+                $query->where('stock', '=', 0);
+            }
+        }
+
+        // Price range filter
+        if ($request->filled('min_price')) {
+            $query->where('price', '>=', $request->min_price);
+        }
+        if ($request->filled('max_price')) {
+            $query->where('price', '<=', $request->max_price);
+        }
+
+        // Sorting
         switch ($request->get('sort', 'latest')) {
             case 'price_low':
+            case 'price-ascending':
                 $query->orderBy('price', 'asc');
                 break;
             case 'price_high':
+            case 'price-descending':
                 $query->orderBy('price', 'desc');
+                break;
+            case 'title-ascending':
+                $query->orderBy('title', 'asc');
+                break;
+            case 'title-descending':
+                $query->orderBy('title', 'desc');
+                break;
+            case 'created-ascending':
+                $query->orderBy('created_at', 'asc');
                 break;
             case 'rating':
                 $query->orderBy('average_rating', 'desc');
+                break;
+            case 'best-selling':
+                // Add logic for best selling if you track sales
+                $query->latest();
+                break;
+            case 'manual':
+            case 'featured':
+                // Add your featured logic here
+                $query->latest();
                 break;
             default:
                 $query->latest();
         }
 
-        $products = $query->paginate(12);
-        $categories = Category::withCount('products')->get();
+        // Pagination
+        $perPage = $request->get('per_page', 12);
+        $products = $query->paginate($perPage);
 
-        return view('store.index', compact('products', 'categories'));
+        // Get all active categories with product count
+        $categories = Category::withCount(['products' => function ($query) {
+            $query->where('is_active', true);
+        }])
+            ->has('products')
+            ->get();
+
+        // Get total product count
+        $totalProducts = Product::where('is_active', true)->count();
+
+        // AJAX request - return JSON
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'html' => view('store.partials.product-grid', compact('products'))->render(),
+                'pagination' => view('store.partials.pagination', compact('products'))->render(),
+                'total' => $products->total(),
+                'current_page' => $products->currentPage(),
+                'last_page' => $products->lastPage(),
+                'from' => $products->firstItem() ?? 0,
+                'to' => $products->lastItem() ?? 0,
+            ]);
+        }
+
+        // Normal request - return view
+        return view('store.index', compact('products', 'categories', 'totalProducts'));
     }
 
     public function show(Product $product)

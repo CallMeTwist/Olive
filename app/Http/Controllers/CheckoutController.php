@@ -123,58 +123,57 @@ class CheckoutController extends Controller
     protected function generateWhatsAppMessage(Order $order): string
     {
         $lines = [];
-        $lines[] = "🛍️ *NEW ORDER FROM " . strtoupper(config('[app.name](http://app.name/)')) . "*";
-        $lines[] = "━━━━━━━━━━━━━━━━━━━━";
-        $lines[] = "";
-        $lines[] = "🔖 *Order #: {$order->order_number}*";
-        $lines[] = "";
-        $lines[] = "📦 *ORDER DETAILS:*";
 
+        // Header
+        $lines[] = "🛍️ *NEW ORDER*";
+        $lines[] = "Order #: *{$order->order_number}*";
+        $lines[] = "";
+
+        // Items
+        $lines[] = "*ITEMS:*";
         foreach ($order->items as $item) {
-            $lines[] = "• {$item->product_title}";
+            $itemLine = "• {$item->product_title}";
             if ($item->size) {
-                $lines[] = "  Size: {$item->size}";
+                $itemLine .= " ({$item->size})";
             }
-            if ($item->sku) {
-                $lines[] = "  SKU: {$item->sku}";
-            }
-            $lines[] = "  Qty: {$item->quantity} × ₦" . number_format($item->price, 2);
-            $lines[] = "  Subtotal: ₦" . number_format($item->subtotal, 2);
-            $lines[] = "";
+            $itemLine .= " - {$item->quantity}x ₦" . number_format($item->price, 0);
+            $lines[] = $itemLine;
         }
+        $lines[] = "";
 
-        $lines[] = "━━━━━━━━━━━━━━━━━━━━";
-        $lines[] = "💰 *PRICE BREAKDOWN:*";
-        $lines[] = "Subtotal: ₦" . number_format($order->subtotal, 2);
+        // Pricing
+        $lines[] = "*SUMMARY:*";
+        $lines[] = "Subtotal: ₦" . number_format($order->subtotal, 0);
 
         if ($order->savings > 0) {
-            $lines[] = "Savings: -₦" . number_format($order->savings, 2) . " 🎉";
+            $lines[] = "Discount: -₦" . number_format($order->savings, 0);
         }
 
-        $lines[] = "Tax (7.5%): ₦" . number_format($order->tax, 2);
-        $lines[] = "Shipping: " . ($order->shipping > 0 ? "₦" . number_format($order->shipping, 2) : "FREE 🎁");
-        $lines[] = "";
-        $lines[] = "🏆 *TOTAL: ₦" . number_format($order->total, 2) . "*";
-        $lines[] = "━━━━━━━━━━━━━━━━━━━━";
-        $lines[] = "";
-        $lines[] = "📝 *PLEASE PROVIDE:*";
-        $lines[] = "👤 Full Name:";
-        $lines[] = "📞 Phone Number:";
-        $lines[] = "📍 Delivery Address:";
-        $lines[] = "🏙️ City/State:";
-        $lines[] = "";
-        $lines[] = "💳 *PAYMENT INSTRUCTIONS:*";
-        $lines[] = "Bank: [Your Bank Name]";
-        $lines[] = "Account: [Your Account Number]";
-        $lines[] = "Name: [Your Business Name]";
-        $lines[] = "";
-        $lines[] = "⚠️ *IMPORTANT:* Please quote Order #{$order->order_number} when making payment and send your payment receipt here.";
-        $lines[] = "";
-        $lines[] = "⏰ Order Date: " . now()->format('d M Y, h:i A');
-        $lines[] = "";
-        $lines[] = "Thank you for shopping with us! 🙏";
-
-        return implode("\\n", $lines);
-
+        if ($order->tax > 0) {
+            $lines[] = "Tax: ₦" . number_format($order->tax, 0);
         }
+
+        $lines[] = "Shipping: " . ($order->shipping > 0 ? "₦" . number_format($order->shipping, 0) : "FREE");
+        $lines[] = "";
+        $lines[] = "*Total: ₦" . number_format($order->total, 0) . "*";
+        $lines[] = "";
+
+        // Customer instructions
+        $lines[] = "Please reply with:";
+        $lines[] = "• Your full name";
+        $lines[] = "• Phone number";
+        $lines[] = "• Delivery address";
+        $lines[] = "";
+
+        // Payment info - NOW WITH REAL DETAILS
+        $lines[] = "*PAYMENT DETAILS:*";
+        $lines[] = "Bank: " . config('services.payment.bank_name');
+        $lines[] = "Account: " . config('services.payment.account_number');
+        $lines[] = "Name: " . config('services.payment.account_name');
+        $lines[] = "";
+        $lines[] = "Quote Order #*{$order->order_number}* when paying.";
+        $lines[] = "Send payment receipt after transfer.";
+
+        return implode("\n", $lines);
+    }
 }

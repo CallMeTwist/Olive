@@ -289,11 +289,11 @@
                                 <li class="header-icon-wrap cart-wrap d-none d-md-block">
                                     <div class="header-icon-wrapper">
                                         <a href="javascript:void(0)" class="d-block header-icon-cart js-cart-drawer">
-                                                    <span class="header-block-icon-wrap dominant-link d-flex align-items-center">
-                                                        <span class="header-block-icon icon-16"><i class="ri-shopping-bag-3-line"></i></span>
-                                                        <span class="header-block-counter cart-counter dominant-color msl-4 heading-weight text-nowrap">4</span>
-                                                        <span class="d-none d-xl-block cart-total dominant-color msl-4 heading-weight text-nowrap">$246.00</span>
-                                                    </span>
+                                            <span class="header-block-icon-wrap dominant-link d-flex align-items-center">
+                                                <span class="header-block-icon icon-16"><i class="ri-shopping-bag-3-line"></i></span>
+                                                <span class="header-block-counter cart-counter dominant-color msl-4 heading-weight text-nowrap">{{ $cartCount }}</span>
+                                                <span class="d-none d-xl-block cart-total dominant-color msl-4 heading-weight text-nowrap">₦{{ number_format($cartSubtotal, 0) }}</span>
+                                            </span>
                                         </a>
                                     </div>
                                 </li>

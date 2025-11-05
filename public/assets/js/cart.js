@@ -1,6 +1,6 @@
 
 // document.addEventListener('DOMContentLoaded', function () {
-//     console.log('✅ Cart JS loaded with SweetAlert2 + live quantity updates');
+//     console.log('Cart JS loaded with SweetAlert2 + live quantity updates');
 //
 //     // =========================
 //     // SweetAlert2 Helpers
@@ -17,7 +17,7 @@
 //         });
 //     };
 //
-//     const confirmAction = async (title, text = 'You won’t be able to undo this!') => {
+//     const confirmAction = async (title, text = 'You won\'t be able to undo this!') => {
 //         const result = await Swal.fire({
 //             title,
 //             text,
@@ -38,7 +38,7 @@
 //         document.querySelectorAll('.cart-counter').forEach(el => el.textContent = data.cart_count);
 //
 //         const subtotalEl = document.querySelector('.cart-subtotal');
-//         const totalEl = document.querySelector('.cart-total');
+//         const totalEl = document.querySelector('.cart-grand-total');
 //
 //         if (subtotalEl) subtotalEl.textContent = `₦${Number(data.subtotal).toLocaleString()}`;
 //         if (totalEl) totalEl.textContent = `₦${Number(data.total).toLocaleString()}`;
@@ -47,10 +47,10 @@
 //     // =========================
 //     // Debounce Helper
 //     // =========================
-//     let debounceTimer;
-//     const debounce = (func, delay = 400) => {
-//         clearTimeout(debounceTimer);
-//         debounceTimer = setTimeout(func, delay);
+//     const debounceTimers = {}; // Use object to track timers per input
+//     const debounce = (func, delay = 400, key = 'default') => {
+//         clearTimeout(debounceTimers[key]);
+//         debounceTimers[key] = setTimeout(func, delay);
 //     };
 //
 //     // =========================
@@ -69,7 +69,10 @@
 //             const quantity = quantityInput ? quantityInput.value : 1;
 //             const size = sizeInput ? sizeInput.value : null;
 //
-//             if (!size) return Swal.fire('Please select a size.', '', 'warning');
+//             if (!size) {
+//                 Swal.fire('Please select a size.', '', 'warning');
+//                 return;
+//             }
 //
 //             addBtn.disabled = true;
 //             const originalText = addBtn.innerHTML;
@@ -99,7 +102,9 @@
 //                         addBtn.disabled = false;
 //                         addBtn.classList.remove('btn-success');
 //                     }, 1500);
-//                 } else throw new Error(result.message || 'Failed to add to cart');
+//                 } else {
+//                     throw new Error(result.message || 'Failed to add to cart');
+//                 }
 //             } catch (err) {
 //                 Swal.fire('Error', err.message, 'error');
 //                 addBtn.innerHTML = originalText;
@@ -186,6 +191,10 @@
 //     // =========================
 //     document.querySelectorAll('.cart-qty-input').forEach(input => {
 //         const itemId = input.dataset.cartItemId;
+//         const qtyWrap = input.closest('.js-qty-wrap');
+//
+//         const plus = qtyWrap?.querySelector('.js-qty-adjust-plus');
+//         const minus = qtyWrap?.querySelector('.js-qty-adjust-minus');
 //
 //         const updateItem = async (qty) => {
 //             try {
@@ -207,42 +216,47 @@
 //
 //                     const row = input.closest('.cart-table-info');
 //                     const subtotalEl = row.querySelector('.cart-total-price');
-//                     if (subtotalEl) subtotalEl.textContent = `₦${Number(data.item_subtotal).toLocaleString()}`;
+//                     if (subtotalEl) {
+//                         subtotalEl.textContent = `₦${Number(data.item_subtotal).toLocaleString()}`;
+//                     }
 //                 }
 //             } catch (err) {
 //                 Swal.fire('Error updating quantity', err.message, 'error');
 //             }
 //         };
 //
-//         // Manual input
+//         // Manual input with unique debounce key
 //         input.addEventListener('input', () => {
-//             const qty = parseInt(input.value);
-//             debounce(() => updateItem(qty));
+//             const qty = parseInt(input.value) || 1;
+//             debounce(() => updateItem(qty), 400, `input-${itemId}`);
 //         });
 //
-//         // Plus / Minus buttons
-//         const plus = input.closest('.js-qty-wrap')?.querySelector('.js-qty-adjust-plus');
-//         const minus = input.closest('.js-qty-wrap')?.querySelector('.js-qty-adjust-minus');
-//
+//         // Plus button
 //         if (plus) {
-//             plus.addEventListener('click', () => {
-//                 input.value = parseInt(input.value) + 1;
-//                 debounce(() => updateItem(parseInt(input.value)));
+//             plus.addEventListener('click', (e) => {
+//                 e.preventDefault();
+//                 e.stopPropagation();
+//                 const currentVal = parseInt(input.value) || 0;
+//                 input.value = currentVal + 1;
+//                 debounce(() => updateItem(parseInt(input.value)), 400, `plus-${itemId}`);
 //             });
 //         }
 //
+//         // Minus button
 //         if (minus) {
-//             minus.addEventListener('click', () => {
-//                 input.value = Math.max(1, parseInt(input.value) - 1);
-//                 debounce(() => updateItem(parseInt(input.value)));
+//             minus.addEventListener('click', (e) => {
+//                 e.preventDefault();
+//                 e.stopPropagation();
+//                 const currentVal = parseInt(input.value) || 1;
+//                 input.value = Math.max(1, currentVal - 1);
+//                 debounce(() => updateItem(parseInt(input.value)), 400, `minus-${itemId}`);
 //             });
 //         }
 //     });
 // });
 
-
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('Cart JS loaded with SweetAlert2 + live quantity updates');
+    console.log('✅ Cart JS loaded with SweetAlert2 + live quantity updates');
 
     // =========================
     // SweetAlert2 Helpers
@@ -274,16 +288,46 @@ document.addEventListener('DOMContentLoaded', function () {
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
 
     // =========================
-    // Update Totals Helper
+    // Update Totals Helper - FIXED
     // =========================
     const updateTotals = (data) => {
-        document.querySelectorAll('.cart-counter').forEach(el => el.textContent = data.cart_count);
+        // Update all cart counters (navbar, cart page, etc.)
+        document.querySelectorAll('.cart-counter').forEach(el => {
+            el.textContent = data.cart_count || 0;
+        });
 
-        const subtotalEl = document.querySelector('.cart-subtotal');
-        const totalEl = document.querySelector('.cart-grand-total');
+        // Update all subtotal elements (navbar and cart page)
+        document.querySelectorAll('.cart-subtotal').forEach(el => {
+            el.textContent = `₦${Number(data.subtotal || 0).toLocaleString()}`;
+        });
 
-        if (subtotalEl) subtotalEl.textContent = `₦${Number(data.subtotal).toLocaleString()}`;
-        if (totalEl) totalEl.textContent = `₦${Number(data.total).toLocaleString()}`;
+        // Update navbar cart total (the one in header)
+        document.querySelectorAll('.cart-total').forEach(el => {
+            el.textContent = `₦${Number(data.subtotal || 0).toLocaleString()}`;
+        });
+
+        // Update grand total on cart page (if exists)
+        const grandTotalEl = document.querySelector('.cart-grand-total');
+        if (grandTotalEl) {
+            grandTotalEl.textContent = `₦${Number(data.total || 0).toLocaleString()}`;
+        }
+
+        // Update tax if present
+        const taxEl = document.querySelector('.cart-tax');
+        if (taxEl && data.tax !== undefined) {
+            taxEl.textContent = `₦${Number(data.tax).toLocaleString()}`;
+        }
+
+        // Update shipping if present
+        const shippingEl = document.querySelector('.cart-shipping');
+        if (shippingEl && data.shipping !== undefined) {
+            shippingEl.textContent = data.shipping > 0 ? `₦${Number(data.shipping).toLocaleString()}` : 'may vary';
+        }
+
+        // Update items text (e.g., "3 Items")
+        document.querySelectorAll('.cart-items-text').forEach(el => {
+            el.innerHTML = `<span class="cart-counter">${data.cart_count || 0}</span> Items`;
+        });
     };
 
     // =========================
@@ -334,7 +378,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 const result = await response.json();
                 if (response.ok && result.success) {
-                    document.querySelectorAll('.cart-counter').forEach(el => el.textContent = result.cart_count);
+                    // Update all cart displays including navbar
+                    updateTotals(result);
+
                     showToast('✅ Added to cart!');
                     addBtn.innerHTML = '<i class="ri-check-line"></i> Added!';
                     addBtn.classList.add('btn-success');
@@ -378,10 +424,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (data.success) {
                     showToast('🧹 Cart cleared!');
                     updateTotals(data);
-                    document.querySelector('.cart-table-data').innerHTML = `
-                        <div class="text-center py-5">
-                            <p>Your cart is empty 🛒</p>
-                        </div>`;
+
+                    const cartTableData = document.querySelector('.cart-table-data');
+                    if (cartTableData) {
+                        cartTableData.innerHTML = `
+                            <div class="text-center py-5">
+                                <p>Your cart is empty 🛒</p>
+                            </div>`;
+                    }
                 }
             } catch (err) {
                 Swal.fire('Error', err.message, 'error');
@@ -416,10 +466,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     updateTotals(data);
 
                     if (data.cart_count === 0) {
-                        document.querySelector('.cart-table-data').innerHTML = `
-                            <div class="text-center py-5">
-                                <p>Your cart is empty 🛒</p>
-                            </div>`;
+                        const cartTableData = document.querySelector('.cart-table-data');
+                        if (cartTableData) {
+                            cartTableData.innerHTML = `
+                                <div class="text-center py-5">
+                                    <p>Your cart is empty 🛒</p>
+                                </div>`;
+                        }
                     }
                 }
             } catch (err) {
@@ -457,8 +510,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     updateTotals(data);
 
                     const row = input.closest('.cart-table-info');
-                    const subtotalEl = row.querySelector('.cart-total-price');
-                    if (subtotalEl) {
+                    const subtotalEl = row?.querySelector('.cart-total-price');
+                    if (subtotalEl && data.item_subtotal !== undefined) {
                         subtotalEl.textContent = `₦${Number(data.item_subtotal).toLocaleString()}`;
                     }
                 }

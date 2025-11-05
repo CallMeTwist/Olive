@@ -39,4 +39,10 @@ return [
         'number' => env('WHATSAPP_NUMBER'),
     ],
 
+    'payment' => [
+        'bank_name' => env('PAYMENT_BANK_NAME', 'Opay'),
+        'account_number' => env('PAYMENT_ACCOUNT_NUMBER', '7064412910'),
+        'account_name' => env('PAYMENT_ACCOUNT_NAME', 'Edison Eluke'),
+    ],
+
 ];
