@@ -126,7 +126,7 @@
                                         </a>
                                     </li>
                                     <li class="menu-li">
-                                        <a href="collection.html" class="menu-link font-16 d-flex align-items-center plr-10 plr-xxl-15">
+                                        <a href="{{route('about')}}" class="menu-link font-16 d-flex align-items-center plr-10 plr-xxl-15">
                                             <span class="menu-title text-uppercase heading-weight">About</span>
                                         </a>
                                     </li>
@@ -276,16 +276,16 @@
                                         </a>
                                     </div>
                                 </li>
-                                <li class="header-icon-wrap wishlist-wrap d-none d-md-block">
-                                    <div class="header-icon-wrapper">
-                                        <a href="wishlist.html" class="d-block header-icon-wishlist">
-                                                    <span class="header-block-icon-wrap dominant-link d-flex align-items-center">
-                                                        <span class="header-block-icon icon-16"><i class="ri-heart-line"></i></span>
-                                                        <span class="header-block-counter wishlist-counter dominant-color msl-4 heading-weight text-nowrap">4</span>
-                                                    </span>
-                                        </a>
-                                    </div>
-                                </li>
+{{--                                <li class="header-icon-wrap wishlist-wrap d-none d-md-block">--}}
+{{--                                    <div class="header-icon-wrapper">--}}
+{{--                                        <a href="wishlist.html" class="d-block header-icon-wishlist">--}}
+{{--                                                    <span class="header-block-icon-wrap dominant-link d-flex align-items-center">--}}
+{{--                                                        <span class="header-block-icon icon-16"><i class="ri-heart-line"></i></span>--}}
+{{--                                                        <span class="header-block-counter wishlist-counter dominant-color msl-4 heading-weight text-nowrap">4</span>--}}
+{{--                                                    </span>--}}
+{{--                                        </a>--}}
+{{--                                    </div>--}}
+{{--                                </li>--}}
                                 <li class="header-icon-wrap cart-wrap d-none d-md-block">
                                     <div class="header-icon-wrapper">
                                         <a href="javascript:void(0)" class="d-block header-icon-cart js-cart-drawer">

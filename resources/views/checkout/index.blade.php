@@ -3,10 +3,6 @@
 @push('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/account.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/checkout.css') }}">
-    <style>
-
-    </style>
-
 @endpush
 
 @push('scripts')
@@ -23,7 +19,7 @@
 @section('content')
     <!-- checkout start -->
     <section class="checkout-area section-ptb">
-        <form method="post" action="javascript:void(0)">
+
             <div class="container">
                 <div class="row row-mtm flex-lg-row-reverse align-items-lg-start">
                     <div class="col-12 col-lg-5 p-lg-sticky top-0" data-animate="animate__fadeIn">
@@ -206,27 +202,28 @@
                     </div>
                 </div>
             </div>
-        </form>
+
     </section>
     <!-- checkout end -->
 @endsection
 
-<div class="col-12 col-sm-6">
-    <form action="{{ route('checkout.whatsapp') }}" method="POST">
-        @csrf
-        <button type="submit" class="btn-whatsapp w-100 btn-style quaternary-btn"
-                style="
-                                                                                background: #25D366;
-                                                                                color: white;
-                                                                                padding: 15px 30px;
-                                                                                border: none;
-                                                                                border-radius: 8px;
-                                                                                font-size: 16px;
-                                                                                cursor: pointer;
-                                                                                pointer-events: auto;
-                                                                                position: relative;
-                                                                                z-index: 10000;
-                                                                                " > Order via WhatsApp
-        </button>
-    </form>
-</div>
+{{--<div class="col-12 col-sm-6">--}}
+{{--    <form action="{{ route('checkout.whatsapp') }}" method="POST">--}}
+{{--        @csrf--}}
+{{--        <button type="submit" class="btn-whatsapp w-100 btn-style quaternary-btn"--}}
+{{--                style="--}}
+{{--                    background: #25D366;--}}
+{{--                    color: white;--}}
+{{--                    padding: 15px 30px;--}}
+{{--                    border: none;--}}
+{{--                    border-radius: 8px;--}}
+{{--                    font-size: 16px;--}}
+{{--                    cursor: pointer;--}}
+{{--                    pointer-events: auto;--}}
+{{--                    position: relative;--}}
+{{--                    z-index: 10000;--}}
+{{--                    " >--}}
+{{--            Order via WhatsApp--}}
+{{--        </button>--}}
+{{--    </form>--}}
+{{--</div>--}}

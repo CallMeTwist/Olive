@@ -39,7 +39,7 @@
                         <h6 class="font-18">Categories</h6>
                         <div class="shop-cat-post mst-22">
                             <div class="shop-cat ul-mtm-15">
-                                <a href="#"
+                                <a href="javascript:void(0)"
                                    class="category-filter body-dominant-color d-flex align-items-center justify-content-between"
                                    data-category="all">
                                     <span>All Products</span>
