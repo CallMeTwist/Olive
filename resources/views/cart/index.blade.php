@@ -1,6 +1,13 @@
 @extends('layouts.master', [
 ])
 
+@push('styles')
+    <!-- other css -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/theme.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/collection.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/account.css">
+@endpush
+
 @push('scripts')
     <script src="{{asset('/assets/js/cart.js')}}"></script>
     <script src="{{asset('/assets/js/theme.js')}}"></script>

@@ -8,12 +8,136 @@
 
 @push('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/store-custom.css') }}">
+    <link rel="stylesheet" type="text/css" href="/assets/css/theme.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/collection.css">
 @endpush
 
 @push('scripts')
     <script src="{{ asset('assets/js/cart.js') }}"></script>
     <script src="{{ asset('assets/js/store-filter.js') }}"></script>
     <script src="{{asset('/assets/js/theme.js')}}"></script>
+@endpush
+
+@push('notification-bar')
+    <!-- notification-bar start -->
+    <div class="notification-bar ptb-13 primary-bg">
+        <div class="container-fluid d-none d-xl-block">
+            <div class="row">
+                <div class="col-12 col-xl-3">
+                    <span class="extra-color">Mon-Fri : 8:30am to 4:30pm</span>
+                </div>
+                <div class="col-12 col-xl-6 text-center">
+                    <span class="extra-color">Free shipping for above <span class="blinking">$30.00</span>!</span>
+                </div>
+                <div class="col-12 col-xl-3">
+                    <div class="notification-search d-flex justify-content-end">
+                        <form method="get" action="javascript:void(0)" class="search-form">
+                            <div class="search-bar position-relative">
+                                <div class="form-search d-flex flex-wrap">
+                                    <input type="search" name="search-input" class="search-input h-auto text-color bg-transparent ptb-0 plr-0 border-0 rounded-0" value="" placeholder="Find our product" required>
+                                    <button type="submit" onclick="window.location.href='search-product.html'" class="d-block extra-color icon-16" aria-label="Go to search" disabled><i class="ri-search-line d-block lh-1"></i></button>
+                                </div>
+                                <div class="d-none search-results position-absolute top-auto start-0 end-0 body-bg z-2 border-full border-radius box-shadow">
+                                    <div class="search-for ptb-10 plr-15 beb">Search for <span class="search-text">a</span></div>
+                                    <ul class="search-ul">
+                                        <li class="search-li ptb-5 plr-15 bst">
+                                            <a href="product.html" class="body-primary-color d-flex flex-wrap align-items-center">
+                                                <span class="width-48"><img src="assets/image/search/search-product1.jpg" class="w-100 img-fluid border-radius" alt="search-product1"></span>
+                                                <span class="width-calc-48 psl-15 text-truncate">Gleam band</span>
+                                            </a>
+                                        </li>
+                                        <li class="search-li ptb-5 plr-15 bst">
+                                            <a href="product.html" class="body-primary-color d-flex flex-wrap align-items-center">
+                                                <span class="width-48"><img src="assets/image/search/search-product2.jpg" class="w-100 img-fluid border-radius" alt="search-product2"></span>
+                                                <span class="width-calc-48 psl-15 text-truncate">Luxe loop</span>
+                                            </a>
+                                        </li>
+                                        <li class="search-li ptb-5 plr-15 bst">
+                                            <a href="product.html" class="body-primary-color d-flex flex-wrap align-items-center">
+                                                <span class="width-48"><img src="assets/image/search/search-product3.jpg" class="w-100 img-fluid border-radius" alt="search-product3"></span>
+                                                <span class="width-calc-48 psl-15 text-truncate">Opal stud</span>
+                                            </a>
+                                        </li>
+                                        <li class="search-li ptb-5 plr-15 bst">
+                                            <a href="product.html" class="body-primary-color d-flex flex-wrap align-items-center">
+                                                <span class="width-48"><img src="assets/image/search/search-product4.jpg" class="w-100 img-fluid border-radius" alt="search-product4"></span>
+                                                <span class="width-calc-48 psl-15 text-truncate">Ruby hoop</span>
+                                            </a>
+                                        </li>
+                                        <li class="search-li ptb-5 plr-15 bst">
+                                            <a href="product.html" class="body-primary-color d-flex flex-wrap align-items-center">
+                                                <span class="width-48"><img src="assets/image/search/search-product5.jpg" class="w-100 img-fluid border-radius" alt="search-product5"></span>
+                                                <span class="width-calc-48 psl-15 text-truncate">Pearl link</span>
+                                            </a>
+                                        </li>
+                                        <li class="search-li ptb-5 plr-15 bst">
+                                            <a href="product.html" class="body-primary-color d-flex flex-wrap align-items-center">
+                                                <span class="width-48"><img src="assets/image/search/search-product6.jpg" class="w-100 img-fluid border-radius" alt="search-product6"></span>
+                                                <span class="width-calc-48 psl-15 text-truncate">Gold bead</span>
+                                            </a>
+                                        </li>
+                                        <li class="search-li ptb-5 plr-15 bst">
+                                            <a href="product.html" class="body-primary-color d-flex flex-wrap align-items-center">
+                                                <span class="width-48"><img src="assets/image/search/search-product7.jpg" class="w-100 img-fluid border-radius" alt="search-product7"></span>
+                                                <span class="width-calc-48 psl-15 text-truncate">Sway drop</span>
+                                            </a>
+                                        </li>
+                                        <li class="search-li ptb-5 plr-15 bst">
+                                            <a href="product.html" class="body-primary-color d-flex flex-wrap align-items-center">
+                                                <span class="width-48"><img src="assets/image/search/search-product8.jpg" class="w-100 img-fluid border-radius" alt="search-product8"></span>
+                                                <span class="width-calc-48 psl-15 text-truncate">Star charm</span>
+                                            </a>
+                                        </li>
+                                        <li class="search-li ptb-5 plr-15 bst">
+                                            <a href="product.html" class="body-primary-color d-flex flex-wrap align-items-center">
+                                                <span class="width-48"><img src="assets/image/search/search-product9.jpg" class="w-100 img-fluid border-radius" alt="search-product9"></span>
+                                                <span class="width-calc-48 psl-15 text-truncate">Glim cuff</span>
+                                            </a>
+                                        </li>
+                                        <li class="search-li ptb-5 plr-15 bst">
+                                            <a href="product.html" class="body-primary-color d-flex flex-wrap align-items-center">
+                                                <span class="width-48"><img src="assets/image/search/search-product10.jpg" class="w-100 img-fluid border-radius" alt="search-product10"></span>
+                                                <span class="width-calc-48 psl-15 text-truncate">Jade bead</span>
+                                            </a>
+                                        </li>
+                                        <li class="search-li ptb-5 plr-15 bst">
+                                            <a href="product.html" class="body-primary-color d-flex flex-wrap align-items-center">
+                                                <span class="width-48"><img src="assets/image/search/search-product11.jpg" class="w-100 img-fluid border-radius" alt="search-product11"></span>
+                                                <span class="width-calc-48 psl-15 text-truncate">Twist bangle</span>
+                                            </a>
+                                        </li>
+                                        <li class="search-li ptb-5 plr-15 bst">
+                                            <a href="product.html" class="body-primary-color d-flex flex-wrap align-items-center">
+                                                <span class="width-48"><img src="assets/image/search/search-product12.jpg" class="w-100 img-fluid border-radius" alt="search-product12"></span>
+                                                <span class="width-calc-48 psl-15 text-truncate">Shiny choke</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <div class="search-more ptb-10 plr-15 bst"><a href="search-product.html" class="body-secondary-color text-decoration-underline">See all results (12)</a></div>
+                                    <div class="search-fail ptb-10 plr-15">Search not found</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="notification-marquee d-flex d-xl-none overflow-hidden">
+            <div class="notification-marquee-row d-flex">
+                <div class="extra-color psl-15 text-nowrap">Mon-Fri : 8:30am to 4:30pm</div>
+                <div class="extra-color psl-15 text-nowrap">Free shipping for above <span class="blinking">$30.00</span>!</div>
+                <div class="extra-color psl-15 text-nowrap">Mon-Fri : 8:30am to 4:30pm</div>
+                <div class="extra-color psl-15 text-nowrap">Free shipping for above <span class="blinking">$30.00</span>!</div>
+            </div>
+            <div class="notification-marquee-row d-flex">
+                <div class="extra-color psl-15 text-nowrap">Mon-Fri : 8:30am to 4:30pm</div>
+                <div class="extra-color psl-15 text-nowrap">Free shipping for above <span class="blinking">$30.00</span>!</div>
+                <div class="extra-color psl-15 text-nowrap">Mon-Fri : 8:30am to 4:30pm</div>
+                <div class="extra-color psl-15 text-nowrap">Free shipping for above <span class="blinking">$30.00</span>!</div>
+            </div>
+        </div>
+    </div>
+    <!-- notification-bar end -->
 @endpush
 
 @section('breadcrumb')

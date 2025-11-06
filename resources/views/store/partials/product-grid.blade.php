@@ -27,10 +27,10 @@
                             <div class="product-title">
                                 <span class="d-block meb-8">{{ $product->category->name ?? 'Uncategorized' }}</span>
                                 <span class="d-block heading-weight">
-                                                                <a href="{{ route('store.product.show', $product->slug) }}" class="d-block w-100 dominant-link text-truncate">
-                                                                    {{ $product->title }}
-                                                                </a>
-                                                            </span>
+                                    <a href="{{ route('store.product.show', $product->slug) }}" class="d-block w-100 dominant-link text-truncate">
+                                        {{ $product->title }}
+                                    </a>
+                                </span>
                             </div>
                             <div class="pro-price-action">
                                 <div class="price-box heading-weight">

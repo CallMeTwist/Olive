@@ -3,25 +3,42 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class WebsiteController extends Controller
 {
     public function index(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
     {
-        $categories = Category::withCount(['products' => function ($query) {
-            $query->where('is_active', true);
-        }])
-            ->with(['products' => function ($query) {
-                $query->where('is_active', true)
-                    ->with('primaryImage')
-                    ->take(2); // two sample products for banner display
-            }])
-            ->has('products')
-            ->take(3) // limit to 3 main categories for that section
-            ->get();
+        // Cache homepage data for 30 minutes (1800 seconds)
+        $data = Cache::remember('homepage_data', 1800, function () {
 
-        return view('website.welcome', compact('categories'));
+            // ✅ Fetch top categories with active products
+            $categories = Category::query()
+                ->whereHas('products', fn($q) => $q->where('is_active', true))
+                ->withCount(['products' => fn($q) => $q->where('is_active', true)])
+                ->with(['products' => function ($q) {
+                    $q->where('is_active', true)
+                        ->with('primaryImage')
+                        ->latest()
+                        ->take(2); // 2 sample products for banner display
+                }])
+                ->take(3)
+                ->get();
+
+            // ✅ Fetch random or latest trending products
+            $products = Product::query()
+                ->where('is_active', true)
+                ->with(['images', 'primaryImage'])
+                ->inRandomOrder()
+                ->take(6)
+                ->get();
+
+            return compact('categories', 'products');
+        });
+
+        return view('website.welcome', $data);
     }
 
     public function about()

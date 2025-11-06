@@ -2,7 +2,8 @@
 
 @push('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/account.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/checkout.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/theme.css') }}">
+
 @endpush
 
 @push('scripts')

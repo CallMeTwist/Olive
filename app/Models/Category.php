@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 class Category extends Model
@@ -26,6 +27,9 @@ class Category extends Model
                 $category->slug = Str::slug($category->name);
             }
         });
+
+        static::saved(fn() => Cache::forget('homepage_data'));
+        static::deleted(fn() => Cache::forget('homepage_data'));
     }
 
     public function products(): HasMany

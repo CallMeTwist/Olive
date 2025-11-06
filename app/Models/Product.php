@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 class Product extends Model
@@ -60,6 +61,9 @@ class Product extends Model
                 $product->slug = $slug;
             }
         });
+
+        static::saved(fn() => Cache::forget('homepage_data'));
+        static::deleted(fn() => Cache::forget('homepage_data'));
 
 
     }

@@ -3,6 +3,7 @@
 @push('styles')
     <!-- other css -->
     <link rel="stylesheet" type="text/css" href="assets/css/other.css">
+    <link rel="stylesheet" type="text/css" href="/assets/css/theme.css">
 @endpush
 @push('scripts')
     <script src="{{asset('/assets/js/theme.js')}}"></script>
