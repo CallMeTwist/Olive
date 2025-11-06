@@ -7,6 +7,7 @@
 
 @push('scripts')
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <script src="{{asset('/assets/js/theme.js')}}"></script>
 @endpush
 @section('breadcrumb')
     <div class="breadcrumb-area ptb-15" data-bgimg="assets/image/other/breadcrumb-bgimg.jpg">

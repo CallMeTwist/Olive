@@ -119,12 +119,12 @@
     --extra-font-family: "Holligate Signature Demo", sans-serif;
 
     /* general color */
-    --dominant-font-color: #8c8e63;
+    --dominant-font-color: #a5886c;
     --secondary-font-color: #333333;
     --extra-font-color: #ffffff;
     --extra-bgcolor: #ffffff;
     --product-new-sale-label-bgcolor: #333333;
-    --product-discount-label-bgcolor: #e54747;
+    --product-discount-label-bgcolor: #a5886c;
     --product-sold-label-bgcolor: #b02b28;
     --product-review-color: #ffa500;
 

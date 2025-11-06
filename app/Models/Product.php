@@ -26,7 +26,42 @@ class Product extends Model
             } while (self::where('sku', $sku)->exists());
 
             $product->sku = $sku;
+
+            //Generate unique slug
+            if (empty($product->slug)) {
+                $baseSlug = Str::slug($product->title);
+                $slug = $baseSlug;
+                $count = 1;
+
+                while (self::where('slug', $slug)->exists()) {
+                    $slug = "{$baseSlug}-{$count}";
+                    $count++;
+                }
+
+                $product->slug = $slug;
+            }
         });
+
+        // When updating an existing product
+        static::updating(function ($product) {
+            // Only regenerate slug if title changed
+            if ($product->isDirty('title')) {
+                $baseSlug = Str::slug($product->title);
+                $slug = $baseSlug;
+                $count = 1;
+
+                while (self::where('slug', $slug)
+                    ->where('id', '!=', $product->id)
+                    ->exists()) {
+                    $slug = "{$baseSlug}-{$count}";
+                    $count++;
+                }
+
+                $product->slug = $slug;
+            }
+        });
+
+
     }
 
     public function images(): HasMany

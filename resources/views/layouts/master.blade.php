@@ -142,12 +142,12 @@
                                         </a>
                                     </li>
                                     <li class="menu-li">
-                                        <a href="javascript:void(0)" class="menu-link font-16 d-flex align-items-center plr-10 plr-xxl-15">
+                                        <a href="{{route('contact')}}" class="menu-link font-16 d-flex align-items-center plr-10 plr-xxl-15">
                                             <span class="menu-title text-uppercase heading-weight">Contact</span>
                                         </a>
                                     </li>
                                     <li class="menu-li">
-                                        <a href="javascript:void(0)" class="menu-link font-16 d-flex align-items-center plr-10 plr-xxl-15">
+                                        <a href="{{route('faq')}}" class="menu-link font-16 d-flex align-items-center plr-10 plr-xxl-15">
                                             <span class="menu-title text-uppercase heading-weight">FAQ</span>
                                         </a>
                                     </li>
@@ -1038,13 +1038,13 @@
                     <li class="menu-li bst">
                         <div class="menu-btn d-flex flex-row-reverse">
                             <button type="button" class="width-48 icon-16 ptb-10 bsl" data-bs-toggle="collapse" data-bs-target="#menu-product" aria-expanded="false" aria-label="Menu accordion"><i class="ri-add-line d-block lh-1"></i></button>
-                            <span class="width-calc-48 ptb-10 plr-15"><a href="javascript:void(0)" class="d-inline-block">About</a></span>
+                            <span class="width-calc-48 ptb-10 plr-15"><a href="{{route('about')}}" class="d-inline-block">About</a></span>
                         </div>
                     </li>
                     <li class="menu-li bst">
                         <div class="menu-btn d-flex flex-row-reverse">
                             <button type="button" class="width-48 icon-16 ptb-10 bsl" data-bs-toggle="collapse" data-bs-target="#menu-shop" aria-expanded="false" aria-label="Menu accordion"><i class="ri-add-line d-block lh-1"></i></button>
-                            <span class="width-calc-48 ptb-10 plr-15"><a href="collection.html" class="d-inline-block body-color">Store</a></span>
+                            <span class="width-calc-48 ptb-10 plr-15"><a href="{{route('store.index')}}" class="d-inline-block body-color">Store</a></span>
                         </div>
                     </li>
                     <li class="menu-li bst">
@@ -1056,13 +1056,13 @@
                     <li class="menu-li bst">
                         <div class="menu-btn d-flex flex-row-reverse">
                             <button type="button" class="width-48 icon-16 ptb-10 bsl" data-bs-toggle="collapse" data-bs-target="#menu-page" aria-expanded="false" aria-label="Menu accordion"><i class="ri-add-line d-block lh-1"></i></button>
-                            <span class="width-calc-48 ptb-10 plr-15"><a href="javascript:void(0)" class="d-inline-block">Contact</a></span>
+                            <span class="width-calc-48 ptb-10 plr-15"><a href="{{route('contact')}}" class="d-inline-block">Contact</a></span>
                         </div>
                     </li>
                     <li class="menu-li bst">
                         <div class="menu-btn d-flex flex-row-reverse">
                             <button type="button" class="width-48 icon-16 ptb-10 bsl" data-bs-toggle="collapse" data-bs-target="#menu-page" aria-expanded="false" aria-label="Menu accordion"><i class="ri-add-line d-block lh-1"></i></button>
-                            <span class="width-calc-48 ptb-10 plr-15"><a href="javascript:void(0)" class="d-inline-block">FAQ</a></span>
+                            <span class="width-calc-48 ptb-10 plr-15"><a href="{{route('faq')}}" class="d-inline-block">FAQ</a></span>
                         </div>
                     </li>
                 </ul>
@@ -1515,6 +1515,7 @@
 @stack('scripts')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- theme js -->
-<script src="{{asset('/assets/js/theme.js')}}"></script>
+{{--<script src="{{asset('/assets/js/theme.js')}}"></script>--}}
+
 </body>
 </html>

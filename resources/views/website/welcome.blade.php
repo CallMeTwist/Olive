@@ -2,6 +2,15 @@
     $title = 'Welcome',
 ])
 
+{{--@push('styles')--}}
+{{--    <link rel="stylesheet" type="text/css" href="/assets/css/theme2.css">--}}
+{{--@endpush--}}
+
+@push('scripts')
+    <script src="{{asset('/assets/js/theme2.js')}}"></script>
+
+@endpush
+
 @section('content')
     <section class="slider-content">
         <div class="home-slider swiper" id="home-slider">
@@ -15,8 +24,8 @@
                         </div>
                         <div class="col-12 col-md-6 section-ptb body-bg bg-img" data-bgimg="assets/image/index2/slider-bgimg.png">
                             <div class="col-xl-11 col-xxl-10 mx-xl-auto height-md-100 d-md-flex flex-md-column align-items-md-start justify-content-md-center plr-15 plr-md-30 slider-text-info">
-                                <div class="slider-sub-title dominant-color font-18 text-uppercase meb-6 meb-sm-14 meb-xl-17 meb-xxl-20">Best starting price $18.00</div>
-                                <h2 class="font-32 font-sm-40 font-xl-64 font-xxl-72 section-heading-family section-heading-text section-heading-weight section-heading-lh">Necklaces that look stunning</h2>
+                                <div class="slider-sub-title dominant-color font-18 text-uppercase meb-6 meb-sm-14 meb-xl-17 meb-xxl-20">Elegant pieces starting at ₦1,000</div>
+                                <h2 class="font-32 font-sm-40 font-xl-64 font-xxl-72 section-heading-family section-heading-text section-heading-weight section-heading-lh">Handcrafted elegance</h2>
                                 <div class="slider-feature mst-26 mst-sm-34 mst-xl-40 mst-xxl-43">
                                     <ul class="ul-mt30">
                                         <li>
@@ -24,7 +33,7 @@
                                                 <img src="assets/image/index2/slider-1.1.png" class="width-40 img-fluid" alt="slider-1.1">
                                                 <div class="psl-15">
                                                     <h6 class="font-18">Oval diamond</h6>
-                                                    <p class="d-block mst-4">It is a long established</p>
+                                                    <p class="d-block mst-4">Timeless design</p>
                                                 </div>
                                             </div>
                                         </li>
@@ -33,13 +42,13 @@
                                                 <img src="assets/image/index2/slider-1.2.png" class="width-40 img-fluid" alt="slider-1.2">
                                                 <div class="psl-15">
                                                     <h6 class="font-18">Princess diamond</h6>
-                                                    <p class="d-block mst-4">It is a long established</p>
+                                                    <p class="d-block mst-4">Classic beauty</p>
                                                 </div>
                                             </div>
                                         </li>
                                     </ul>
                                 </div>
-                                <a href="collection.html" class="btn-style dominant-btn mst-23 mst-sm-33 mst-xl-43 mst-xxl-48">Shop collecion</a>
+                                <a href="{{route('store.index')}}" class="btn-style dominant-btn mst-23 mst-sm-33 mst-xl-43 mst-xxl-48">Shop collection</a>
                             </div>
                         </div>
                     </div>
@@ -157,8 +166,8 @@
                                                         <span class="cat-img position-absolute top-0 end-0 bottom-0 start-0 d-flex flex-column align-items-center justify-content-center body-bg mtb-xl-25 mlr-xl-25 rounded-circle"><img src="assets/image/index2/cat-1.png" class="width-64 img-fluid" alt="cat-1"></span>
                                                         <div class="d-none cat-link position-absolute top-0 end-0 bottom-0 start-0 z-1 d-xl-flex align-items-center justify-content-center rounded-circle overflow-hidden"><span class="cat-link-btn extra-color text-uppercase heading-weight">Shop now</span></div>
                                                     </a>
-                                                    <h6 class="font-18 mst-26"><a href="collection.html" class="dominant-link">Round shape</a></h6>
-                                                    <a href="collection.html" class="d-inline-block d-xl-none dominant-link text-uppercase heading-weight mst-12"><span class="d-inline-block cat-link-btn">Shop now</span></a>
+                                                    <h6 class="font-18 mst-26"><a href="collection.html" class="primary-link">Round shape</a></h6>
+                                                    <a href="collection.html" class="d-inline-block d-xl-none primary-link text-uppercase heading-weight mst-12"><span class="d-inline-block cat-link-btn">Shop now</span></a>
                                                 </div>
                                             </div>
                                             <div class="swiper-slide" data-animate="animate__fadeIn">
@@ -167,8 +176,8 @@
                                                         <span class="cat-img position-absolute top-0 end-0 bottom-0 start-0 d-flex flex-column align-items-center justify-content-center body-bg mtb-xl-25 mlr-xl-25 rounded-circle"><img src="assets/image/index2/cat-2.png" class="width-64 img-fluid" alt="cat-2"></span>
                                                         <div class="d-none cat-link position-absolute top-0 end-0 bottom-0 start-0 z-1 d-xl-flex align-items-center justify-content-center rounded-circle overflow-hidden"><span class="cat-link-btn extra-color text-uppercase heading-weight">Shop now</span></div>
                                                     </a>
-                                                    <h6 class="font-18 mst-26"><a href="collection.html" class="dominant-link">Princess shape</a></h6>
-                                                    <a href="collection.html" class="d-inline-block d-xl-none dominant-link text-uppercase heading-weight mst-12"><span class="d-inline-block cat-link-btn">Shop now</span></a>
+                                                    <h6 class="font-18 mst-26"><a href="collection.html" class="primary-link">Princess shape</a></h6>
+                                                    <a href="collection.html" class="d-inline-block d-xl-none primary-link text-uppercase heading-weight mst-12"><span class="d-inline-block cat-link-btn">Shop now</span></a>
                                                 </div>
                                             </div>
                                             <div class="swiper-slide" data-animate="animate__fadeIn">
@@ -177,8 +186,8 @@
                                                         <span class="cat-img position-absolute top-0 end-0 bottom-0 start-0 d-flex flex-column align-items-center justify-content-center body-bg mtb-xl-25 mlr-xl-25 rounded-circle"><img src="assets/image/index2/cat-3.png" class="width-64 img-fluid" alt="cat-3"></span>
                                                         <div class="d-none cat-link position-absolute top-0 end-0 bottom-0 start-0 z-1 d-xl-flex align-items-center justify-content-center rounded-circle overflow-hidden"><span class="cat-link-btn extra-color text-uppercase heading-weight">Shop now</span></div>
                                                     </a>
-                                                    <h6 class="font-18 mst-26"><a href="collection.html" class="dominant-link">Oval shape</a></h6>
-                                                    <a href="collection.html" class="d-inline-block d-xl-none dominant-link text-uppercase heading-weight mst-12"><span class="d-inline-block cat-link-btn">Shop now</span></a>
+                                                    <h6 class="font-18 mst-26"><a href="collection.html" class="primary-link">Oval shape</a></h6>
+                                                    <a href="collection.html" class="d-inline-block d-xl-none primary-link text-uppercase heading-weight mst-12"><span class="d-inline-block cat-link-btn">Shop now</span></a>
                                                 </div>
                                             </div>
                                             <div class="swiper-slide" data-animate="animate__fadeIn">
@@ -187,8 +196,8 @@
                                                         <span class="cat-img position-absolute top-0 end-0 bottom-0 start-0 d-flex flex-column align-items-center justify-content-center body-bg mtb-xl-25 mlr-xl-25 rounded-circle"><img src="assets/image/index2/cat-4.png" class="width-64 img-fluid" alt="cat-4"></span>
                                                         <div class="d-none cat-link position-absolute top-0 end-0 bottom-0 start-0 z-1 d-xl-flex align-items-center justify-content-center rounded-circle overflow-hidden"><span class="cat-link-btn extra-color text-uppercase heading-weight">Shop now</span></div>
                                                     </a>
-                                                    <h6 class="font-18 mst-26"><a href="collection.html" class="dominant-link">Marquise shape</a></h6>
-                                                    <a href="collection.html" class="d-inline-block d-xl-none dominant-link text-uppercase heading-weight mst-12"><span class="d-inline-block cat-link-btn">Shop now</span></a>
+                                                    <h6 class="font-18 mst-26"><a href="collection.html" class="primary-link">Marquise shape</a></h6>
+                                                    <a href="collection.html" class="d-inline-block d-xl-none primary-link text-uppercase heading-weight mst-12"><span class="d-inline-block cat-link-btn">Shop now</span></a>
                                                 </div>
                                             </div>
                                             <div class="swiper-slide" data-animate="animate__fadeIn">
@@ -197,8 +206,8 @@
                                                         <span class="cat-img position-absolute top-0 end-0 bottom-0 start-0 d-flex flex-column align-items-center justify-content-center body-bg mtb-xl-25 mlr-xl-25 rounded-circle"><img src="assets/image/index2/cat-5.png" class="width-64 img-fluid" alt="cat-5"></span>
                                                         <div class="d-none cat-link position-absolute top-0 end-0 bottom-0 start-0 z-1 d-xl-flex align-items-center justify-content-center rounded-circle overflow-hidden"><span class="cat-link-btn extra-color text-uppercase heading-weight">Shop now</span></div>
                                                     </a>
-                                                    <h6 class="font-18 mst-26"><a href="collection.html" class="dominant-link">Emerald shape</a></h6>
-                                                    <a href="collection.html" class="d-inline-block d-xl-none dominant-link text-uppercase heading-weight mst-12"><span class="d-inline-block cat-link-btn">Shop now</span></a>
+                                                    <h6 class="font-18 mst-26"><a href="collection.html" class="primary-link">Emerald shape</a></h6>
+                                                    <a href="collection.html" class="d-inline-block d-xl-none primary-link text-uppercase heading-weight mst-12"><span class="d-inline-block cat-link-btn">Shop now</span></a>
                                                 </div>
                                             </div>
                                             <div class="swiper-slide" data-animate="animate__fadeIn">
@@ -207,8 +216,8 @@
                                                         <span class="cat-img position-absolute top-0 end-0 bottom-0 start-0 d-flex flex-column align-items-center justify-content-center body-bg mtb-xl-25 mlr-xl-25 rounded-circle"><img src="assets/image/index2/cat-6.png" class="width-64 img-fluid" alt="cat-6"></span>
                                                         <div class="d-none cat-link position-absolute top-0 end-0 bottom-0 start-0 z-1 d-xl-flex align-items-center justify-content-center rounded-circle overflow-hidden"><span class="cat-link-btn extra-color text-uppercase heading-weight">Shop now</span></div>
                                                     </a>
-                                                    <h6 class="font-18 mst-26"><a href="collection.html" class="dominant-link">Radiant shape</a></h6>
-                                                    <a href="collection.html" class="d-inline-block d-xl-none dominant-link text-uppercase heading-weight mst-12"><span class="d-inline-block cat-link-btn">Shop now</span></a>
+                                                    <h6 class="font-18 mst-26"><a href="collection.html" class="primary-link">Radiant shape</a></h6>
+                                                    <a href="collection.html" class="d-inline-block d-xl-none primary-link text-uppercase heading-weight mst-12"><span class="d-inline-block cat-link-btn">Shop now</span></a>
                                                 </div>
                                             </div>
                                             <div class="swiper-slide" data-animate="animate__fadeIn">
@@ -217,8 +226,8 @@
                                                         <span class="cat-img position-absolute top-0 end-0 bottom-0 start-0 d-flex flex-column align-items-center justify-content-center body-bg mtb-xl-25 mlr-xl-25 rounded-circle"><img src="assets/image/index2/cat-7.png" class="width-64 img-fluid" alt="cat-7"></span>
                                                         <div class="d-none cat-link position-absolute top-0 end-0 bottom-0 start-0 z-1 d-xl-flex align-items-center justify-content-center rounded-circle overflow-hidden"><span class="cat-link-btn extra-color text-uppercase heading-weight">Shop now</span></div>
                                                     </a>
-                                                    <h6 class="font-18 mst-26"><a href="collection.html" class="dominant-link">Heart shape</a></h6>
-                                                    <a href="collection.html" class="d-inline-block d-xl-none dominant-link text-uppercase heading-weight mst-12"><span class="d-inline-block cat-link-btn">Shop now</span></a>
+                                                    <h6 class="font-18 mst-26"><a href="collection.html" class="primary-link">Heart shape</a></h6>
+                                                    <a href="collection.html" class="d-inline-block d-xl-none primary-link text-uppercase heading-weight mst-12"><span class="d-inline-block cat-link-btn">Shop now</span></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -244,6 +253,7 @@
         </div>
     </section>
     <!-- category-slider end -->
+    <!-- category-slider end -->
     <!-- collection-tab start -->
     <section class="collection-tab section-ptb extra-bg bst">
         <div class="container">
@@ -255,126 +265,71 @@
                         </div>
                         <div class="tab mst-13 mst-sm-23 mst-xl-40" data-animate="animate__fadeIn">
                             <ul class="nav nav-tabs flex-xl-column justify-content-center border-0" role="tablist">
-                                <li role="presentation">
-                                    <a href="#tab1" data-bs-toggle="tab" class="d-block show active" role="tab">
-                                        <span class="collection-tab-title-mobile d-inline-block d-xl-none">Rings</span>
+                                @foreach($categories as $index => $category)
+                                    <li role="presentation">
+                                    <a href="#tab{{ $index + 1 }}" data-bs-toggle="tab" class="d-block {{ $loop->first ? 'show active' : '' }}" role="tab">
+                                        <span class="collection-tab-title-mobile d-inline-block d-xl-none">{{ $category->name }}</span>
                                         <div class="collection-tab-title-desktop d-none d-xl-flex flex-wrap">
                                             <span class="collection-tab-img width-48"><img src="assets/image/index2/collection-tab1.png" class="w-100 img-fluid" alt="collection-tab1"></span>
                                             <div class="collection-tab-title width-calc-96 plr-15">
-                                                <h6 class="font-18">Rings</h6>
+                                                <h6 class="font-18">{{ $category->name }}</h6>
                                                 <p class="d-block mst-4">Only up to 60% off</p>
                                             </div>
                                             <div class="collection-tab-counter-icon width-48">
                                                 <div class="position-relative width-48 height-48 d-flex align-items-center justify-content-center extra-bg border-full rounded-circle overflow-hidden">
-                                                    <span class="collection-tab-counter dominant-color">8+</span>
+                                                    <span class="collection-tab-counter dominant-color">{{ $category->products_count }}+</span>
                                                     <span class="collection-tab-icon extra-color icon-16 position-absolute top-0 end-0 bottom-0 start-0 d-flex align-items-center justify-content-center z-1"><i class="ri-arrow-right-line d-block lh-1"></i></span>
                                                 </div>
                                             </div>
                                         </div>
                                     </a>
                                 </li>
-                                <li role="presentation">
-                                    <a href="#tab2" data-bs-toggle="tab" class="d-block" role="tab">
-                                        <span class="collection-tab-title-mobile d-inline-block d-xl-none">Earrings</span>
-                                        <div class="collection-tab-title-desktop d-none d-xl-flex flex-wrap">
-                                            <span class="collection-tab-img width-48"><img src="assets/image/index2/collection-tab2.png" class="w-100 img-fluid" alt="collection-tab2"></span>
-                                            <div class="collection-tab-title width-calc-96 plr-15">
-                                                <h6 class="font-18">Earrings</h6>
-                                                <p class="d-block mst-4">Only up to 20% off</p>
-                                            </div>
-                                            <div class="collection-tab-counter-icon width-48">
-                                                <div class="position-relative width-48 height-48 d-flex align-items-center justify-content-center extra-bg border-full rounded-circle overflow-hidden">
-                                                    <span class="collection-tab-counter dominant-color">9+</span>
-                                                    <span class="collection-tab-icon extra-color icon-16 position-absolute top-0 end-0 bottom-0 start-0 d-flex align-items-center justify-content-center z-1"><i class="ri-arrow-right-line d-block lh-1"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li role="presentation">
-                                    <a href="#tab3" data-bs-toggle="tab" class="d-block" role="tab">
-                                        <span class="collection-tab-title-mobile d-inline-block d-xl-none">Bracelet</span>
-                                        <div class="collection-tab-title-desktop d-none d-xl-flex flex-wrap">
-                                            <span class="collection-tab-img width-48"><img src="assets/image/index2/collection-tab3.png" class="w-100 img-fluid" alt="collection-tab3"></span>
-                                            <div class="collection-tab-title width-calc-96 plr-15">
-                                                <h6 class="font-18">Bracelet</h6>
-                                                <p class="d-block mst-4">Only up to 15% off</p>
-                                            </div>
-                                            <div class="collection-tab-counter-icon width-48">
-                                                <div class="position-relative width-48 height-48 d-flex align-items-center justify-content-center extra-bg border-full rounded-circle overflow-hidden">
-                                                    <span class="collection-tab-counter dominant-color">15+</span>
-                                                    <span class="collection-tab-icon extra-color icon-16 position-absolute top-0 end-0 bottom-0 start-0 d-flex align-items-center justify-content-center z-1"><i class="ri-arrow-right-line d-block lh-1"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
                     <div class="view-button d-none d-xl-block text-xl-start" data-animate="animate__fadeIn">
-                        <a href="collections.html" class="btn-style secondary-btn">View catalog</a>
+                        <a href="{{route('store.index')}}" class="btn-style secondary-btn">View catalog</a>
                     </div>
                 </div>
+
+                @php
+                    // These are your static homepage banners (not from DB)
+                    $banners = [
+                        ['assets/image/index2/collection-banner1.1.jpg', 'assets/image/index2/collection-banner1.2.jpg'],
+                        ['assets/image/index2/collection-banner2.1.jpg', 'assets/image/index2/collection-banner2.2.jpg'],
+                        ['assets/image/index2/collection-banner3.1.jpg', 'assets/image/index2/collection-banner3.2.jpg'],
+                    ];
+                @endphp
+
                 <div class="col-12 col-xl-8">
                     <div class="tab-content">
-                        <div class="tab-pane fade active show" id="tab1">
-                            <div class="collection-banner">
-                                <div class="row row-mtm">
-                                    <div class="col-6" data-animate="animate__fadeIn">
-                                        <a href="collection.html" class="d-block position-relative br-hidden">
-                                            <img src="assets/image/index2/collection-banner1.1.jpg" class="w-100 img-fluid" alt="collection-banner1.1">
-                                            <span class="collection-banner-label secondary-color position-absolute bottom-0 end-0 width-80 height-80 d-flex flex-column align-items-center justify-content-center extra-bg ptb-5 plr-5 mer-15 mer-sm-30 mer-xxl-50 meb-15 meb-sm-30 meb-xl-50 text-center text-uppercase heading-weight lh-1 rounded-circle">Only<span class="dominant-color mst-6 text-uppercase">$15.00</span></span>
-                                        </a>
-                                    </div>
-                                    <div class="col-6" data-animate="animate__fadeIn">
-                                        <a href="collection.html" class="d-block position-relative br-hidden">
-                                            <img src="assets/image/index2/collection-banner1.2.jpg" class="w-100 img-fluid" alt="collection-banner1.2">
-                                            <span class="collection-banner-label secondary-color position-absolute top-0 end-0 width-80 height-80 d-flex flex-column align-items-center justify-content-center extra-bg ptb-5 plr-5 mer-15 mer-sm-30 mer-xxl-50 mst-15 mst-sm-30 mst-xl-50 text-center text-uppercase heading-weight lh-1 rounded-circle">Only<span class="dominant-color mst-6 text-uppercase">$8.00</span></span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="tab2">
-                            <div class="collection-banner">
-                                <div class="row row-mtm">
-                                    <div class="col-6" data-animate="animate__fadeIn">
-                                        <a href="collection.html" class="d-block position-relative br-hidden">
-                                            <img src="assets/image/index2/collection-banner2.1.jpg" class="w-100 img-fluid" alt="collection-banner2.1">
-                                            <span class="collection-banner-label secondary-color position-absolute bottom-0 end-0 width-80 height-80 d-flex flex-column align-items-center justify-content-center extra-bg ptb-5 plr-5 mer-15 mer-sm-30 mer-xxl-50 meb-15 meb-sm-30 meb-xl-50 text-center text-uppercase heading-weight lh-1 rounded-circle">Only<span class="dominant-color mst-6 text-uppercase">$15.00</span></span>
-                                        </a>
-                                    </div>
-                                    <div class="col-6" data-animate="animate__fadeIn">
-                                        <a href="collection.html" class="d-block position-relative br-hidden">
-                                            <img src="assets/image/index2/collection-banner2.2.jpg" class="w-100 img-fluid" alt="collection-banner2.2">
-                                            <span class="collection-banner-label secondary-color position-absolute top-0 end-0 width-80 height-80 d-flex flex-column align-items-center justify-content-center extra-bg ptb-5 plr-5 mer-15 mer-sm-30 mer-xxl-50 mst-15 mst-sm-30 mst-xl-50 text-center text-uppercase heading-weight lh-1 rounded-circle">Only<span class="dominant-color mst-6 text-uppercase">$8.00</span></span>
-                                        </a>
+                        @foreach($categories as $index => $category)
+                            <div class="tab-pane fade {{ $loop->first ? 'active show' : '' }}" id="tab{{ $index + 1 }}">
+                                <div class="collection-banner">
+                                    <div class="row row-mtm">
+                                        @foreach($banners[$index] as $banner)
+                                            <div class="col-6" data-animate="animate__fadeIn">
+                                                <!-- ✅ Dynamic link to category products -->
+                                                <a href="{{ route('store.index', ['category' => $category->slug]) }}"
+                                                   class="d-block position-relative br-hidden">
+                                                    <img src="{{ asset($banner) }}"
+                                                         class="w-100 img-fluid"
+                                                         alt="{{ $category->name }} banner">
+
+                                                    <span class="collection-banner-label secondary-color position-absolute bottom-0 end-0 width-80 height-80 d-flex flex-column align-items-center justify-content-center extra-bg ptb-5 plr-5 mer-15 text-center text-uppercase heading-weight lh-1 rounded-circle">
+                                                        Only<span class="dominant-color mst-6 text-uppercase">$15.00</span>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="tab-pane fade" id="tab3">
-                            <div class="collection-banner">
-                                <div class="row row-mtm">
-                                    <div class="col-6" data-animate="animate__fadeIn">
-                                        <a href="collection.html" class="d-block position-relative br-hidden">
-                                            <img src="assets/image/index2/collection-banner3.1.jpg" class="w-100 img-fluid" alt="collection-banner3.1">
-                                            <span class="collection-banner-label secondary-color position-absolute bottom-0 end-0 width-80 height-80 d-flex flex-column align-items-center justify-content-center extra-bg ptb-5 plr-5 mer-15 mer-sm-30 mer-xxl-50 meb-15 meb-sm-30 meb-xl-50 text-center text-uppercase heading-weight lh-1 rounded-circle">Only<span class="dominant-color mst-6 text-uppercase">$15.00</span></span>
-                                        </a>
-                                    </div>
-                                    <div class="col-6" data-animate="animate__fadeIn">
-                                        <a href="collection.html" class="d-block position-relative br-hidden">
-                                            <img src="assets/image/index2/collection-banner3.2.jpg" class="w-100 img-fluid" alt="collection-banner3.2">
-                                            <span class="collection-banner-label secondary-color position-absolute top-0 end-0 width-80 height-80 d-flex flex-column align-items-center justify-content-center extra-bg ptb-5 plr-5 mer-15 mer-sm-30 mer-xxl-50 mst-15 mst-sm-30 mst-xl-50 text-center text-uppercase heading-weight lh-1 rounded-circle">Only<span class="dominant-color mst-6 text-uppercase">$8.00</span></span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                     <div class="view-button d-xl-none" data-animate="animate__fadeIn">
-                        <a href="collections.html" class="btn-style secondary-btn">View catalog</a>
+                        <a href="{{route('store.index')}}" class="btn-style secondary-btn">View catalog</a>
                     </div>
                 </div>
             </div>
@@ -1873,8 +1828,8 @@
             </div>
         </div>
     </div>
-    <!-- brand-logo end -->
-    <!-- home-about start -->
+{{--    <!-- brand-logo end -->--}}
+{{--    <!-- home-about start -->--}}
     <section class="home-about section-ptb extra-bg">
         <div class="container">
             <div class="d-flex flex-wrap br-hidden">
@@ -1918,6 +1873,7 @@
     </section>
     <!-- home-about end -->
     <!-- testimonial start -->
+    <!-- testimonial start -->
     <section class="testimonial section-ptb">
         <div class="container">
             <div class="testi-category">
@@ -1937,7 +1893,7 @@
                                                 <span class="extra-color product-label-discount d-inline-flex align-items-center ptb-5 plr-15 meb-23 border-radius"><i class="ri-star-fill font-12 mer-5"></i>5.0</span>
                                                 <p>Exquisite craftsmanship and timeless designs! Absolutely love these pieces.</p>
                                                 <div class="mst-16">
-                                                    <span class="dominant-color font-32 extra-font fw-normal">Wesley bates</span>
+                                                    <span class="primary-color font-32 extra-font fw-normal">Wesley bates</span>
                                                     <h6 class="font-18 mst-6">Luxury expert</h6>
                                                 </div>
                                             </div>
@@ -1956,7 +1912,7 @@
                                                 <span class="extra-color product-label-discount d-inline-flex align-items-center ptb-5 plr-15 meb-23 border-radius"><i class="ri-star-fill font-12 mer-5"></i>4.0</span>
                                                 <p>Elegant and trendy jewelry that enhances any outfit. A must-have collection!</p>
                                                 <div class="mst-16">
-                                                    <span class="dominant-color font-32 extra-font fw-normal">Carla houston</span>
+                                                    <span class="primary-color font-32 extra-font fw-normal">Carla houston</span>
                                                     <h6 class="font-18 mst-6">Fashion stylist</h6>
                                                 </div>
                                             </div>
@@ -1975,7 +1931,7 @@
                                                 <span class="extra-color product-label-discount d-inline-flex align-items-center ptb-5 plr-15 meb-23 border-radius"><i class="ri-star-fill font-12 mer-5"></i>4.0</span>
                                                 <p>Brilliant quality and intricate details. These designs truly stand out!</p>
                                                 <div class="mst-16">
-                                                    <span class="dominant-color font-32 extra-font fw-normal">Ashley rosa</span>
+                                                    <span class="primary-color font-32 extra-font fw-normal">Ashley rosa</span>
                                                     <h6 class="font-18 mst-6">Jewelry designer</h6>
                                                 </div>
                                             </div>
@@ -1994,7 +1950,7 @@
                                                 <span class="extra-color product-label-discount d-inline-flex align-items-center ptb-5 plr-15 meb-23 border-radius"><i class="ri-star-fill font-12 mer-5"></i>4.0</span>
                                                 <p>Brilliant quality and intricate details. These designs truly stand out!</p>
                                                 <div class="mst-16">
-                                                    <span class="dominant-color font-32 extra-font fw-normal">Lisa resnick</span>
+                                                    <span class="primary-color font-32 extra-font fw-normal">Lisa resnick</span>
                                                     <h6 class="font-18 mst-6">Gemstone specialist</h6>
                                                 </div>
                                             </div>
@@ -2020,6 +1976,7 @@
             </div>
         </div>
     </section>
+    <!-- testimonial end -->
     <!-- testimonial end -->
     <!-- service-area start -->
     <section class="service-area section-ptb bst">

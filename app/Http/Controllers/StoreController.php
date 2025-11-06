@@ -14,9 +14,14 @@ class StoreController extends Controller
             ->where('is_active', true);
 
         // Category filter
+        // ✅ Category filter (by slug instead of ID)
         if ($request->filled('category') && $request->category !== 'all') {
-            $query->where('category_id', $request->category);
+            $category = Category::where('slug', $request->category)->first();
+            if ($category) {
+                $query->where('category_id', $category->id);
+            }
         }
+
 
         // Search filter
         if ($request->filled('search')) {
@@ -125,4 +130,14 @@ class StoreController extends Controller
 
         return view('store.show', compact('product', 'relatedProducts'));
     }
+
+    public function showCategory($slug)
+    {
+        $category = Category::where('slug', $slug)
+            ->with('products')
+            ->firstOrFail();
+
+        return view('shop.category', compact('category'));
+    }
+
 }

@@ -1,5 +1,14 @@
 @extends('layouts.master')
 
+@push('styles')
+    <!-- other css -->
+    <link rel="stylesheet" type="text/css" href="assets/css/other.css">
+@endpush
+
+@push('scripts')
+    <script src="{{asset('/assets/js/theme.js')}}"></script>
+@endpush
+
 @section('breadcrumb')
     <!-- breadcrumb-area start -->
     <div class="breadcrumb-area ptb-15" data-bgimg="assets/image/other/breadcrumb-bgimg.jpg">

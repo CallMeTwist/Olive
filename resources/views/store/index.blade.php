@@ -13,11 +13,12 @@
 @push('scripts')
     <script src="{{ asset('assets/js/cart.js') }}"></script>
     <script src="{{ asset('assets/js/store-filter.js') }}"></script>
+    <script src="{{asset('/assets/js/theme.js')}}"></script>
 @endpush
 
 @section('breadcrumb')
     <!-- breadcrumb-area start -->
-    <div class="breadcrumb-area ptb-15" data-bgimg="/assets/image/other/breadcrumb-bgimg.jpg">
+    <div class="breadcrumb-area ptb-15" data-bgimg="assets/image/other/breadcrumb-bgimg.jpg">
         <div class="container">
             <span class="d-block extra-color"><a href="index.html" class="extra-color">Home</a> / Collection without sidebar</span>
         </div>

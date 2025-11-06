@@ -56,9 +56,8 @@
 /*====================================
     google font
 ====================================*/
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
-
 /************************************* font end *************************************/
 
 /************************************* root start *************************************/
@@ -93,12 +92,12 @@
     --paragraph-font-line-height: 25px;
 
     /* general color */
-    --dominant-font-color: #8c8e63;
+    --primary-font-color: #a5886c;
     --secondary-font-color: #333333;
     --extra-font-color: #ffffff;
     --extra-bgcolor: #ffffff;
     --product-new-sale-label-bgcolor: #333333;
-    --product-discount-label-bgcolor: #e54747;
+    --product-discount-label-bgcolor: #a5886c;
     --product-sold-label-bgcolor: #b02b28;
     --product-review-color: #ffa500;
 
@@ -120,22 +119,22 @@
     body property css
 =====================================*/
 .body-color,
-.body-dominant-color,
+.body-primary-color,
 .body-secondary-color {
     color: var(--body-font-color);
 }
-.dominant-link {
+.primary-link {
     color: var(--heading-font-color);
 }
-.body-dominant-color,
+.body-primary-color,
 .body-secondary-color,
-.dominant-link {
+.primary-link {
     -webkit-transition: color 0.5s ease-in-out;
     transition: color 0.5s ease-in-out;
 }
-.body-dominant-color:hover,
-.dominant-link:hover {
-    color: var(--dominant-font-color);
+.body-primary-color:hover,
+.primary-link:hover {
+    color: var(--primary-font-color);
 }
 .body-secondary-color:hover {
     color: var(--secondary-font-color);
@@ -172,11 +171,11 @@
 /*=====================================
     general property css
 =====================================*/
-.dominant-color {
-    color: var(--dominant-font-color);
+.primary-color {
+    color: var(--primary-font-color);
 }
-.dominant-bg {
-    background-color: var(--dominant-font-color);
+.primary-bg {
+    background-color: var(--primary-font-color);
 }
 .secondary-color {
     color: var(--secondary-font-color);
@@ -190,20 +189,20 @@
 .extra-bg {
     background-color: var(--extra-bgcolor);
 }
-.dominant-btn {
+.primary-btn {
     color: var(--extra-font-color);
-    background-color: var(--dominant-font-color);
-    border: 2px solid var(--dominant-font-color);
+    background-color: var(--primary-font-color);
+    border: 2px solid var(--primary-font-color);
 }
-.dominant-btn:hover {
-    color: var(--dominant-font-color);
+.primary-btn:hover {
+    color: var(--primary-font-color);
     background-color: var(--extra-font-color);
     border-color: var(--extra-font-color);
 }
 .secondary-btn {
     color: var(--extra-font-color);
-    background-color: var(--dominant-font-color);
-    border: 2px solid var(--dominant-font-color);
+    background-color: var(--primary-font-color);
+    border: 2px solid var(--primary-font-color);
 }
 .secondary-btn:hover {
     color: var(--extra-font-color);
@@ -216,41 +215,41 @@
     border: 2px solid var(--secondary-font-color);
 }
 .tertiary-btn:hover {
-    color: var(--dominant-font-color);
+    color: var(--primary-font-color);
     background-color: var(--extra-font-color);
     border: 2px solid var(--extra-font-color);
 }
 .quaternary-btn {
-    color: var(--dominant-font-color);
+    color: var(--primary-font-color);
     background-color: transparent;
-    border: 2px solid var(--dominant-font-color);
+    border: 2px solid var(--primary-font-color);
 }
 .quaternary-btn:hover {
     color: var(--extra-font-color);
-    background-color: var(--dominant-font-color);
-    border-color: var(--dominant-font-color);
+    background-color: var(--primary-font-color);
+    border-color: var(--primary-font-color);
 }
-.dominant-btn, .secondary-btn, .tertiary-btn, .quaternary-btn {
+.primary-btn, .secondary-btn, .tertiary-btn, .quaternary-btn {
     -webkit-transition: color 0.5s ease-in-out,background-color 0.5s ease-in-out,border-color 0.5s ease-in-out;
     transition: color 0.5s ease-in-out,background-color 0.5s ease-in-out,border-color 0.5s ease-in-out;
 }
 .link-btn {
     display: inline-block;
-    color: var(--dominant-font-color);
+    color: var(--primary-font-color);
     text-transform: uppercase;
     font-weight: var(--heading-font-weight);
     border-bottom: 1px solid;
 }
-.link-body-dominant, .link-body-secondary {
+.link-body-primary, .link-body-secondary {
     color: var(--body-font-color);
 }
-.link-dominant-color {
-    color: var(--dominant-font-color);
+.link-primary-color {
+    color: var(--primary-font-color);
 }
 .link-secondary-color {
     color: var(--secondary-font-color);
 }
-.link-body-dominant, .link-body-secondary, .link-dominant-color, .link-secondary-color {
+.link-body-primary, .link-body-secondary, .link-primary-color, .link-secondary-color {
     display: inline-block;
     text-transform: uppercase;
     font-weight: var(--heading-font-weight);
@@ -258,8 +257,8 @@
     -webkit-transition: color 0.5s ease-in-out,border-color 0.5s ease-in-out;
     transition: color 0.5s ease-in-out,border-color 0.5s ease-in-out;
 }
-.link-body-dominant:hover, .link-dominant-color:hover {
-    color: var(--dominant-font-color);
+.link-body-primary:hover, .link-primary-color:hover {
+    color: var(--primary-font-color);
 }
 .link-body-secondary:hover, .link-secondary-color:hover {
     color: var(--secondary-font-color);
@@ -322,7 +321,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .section-capture span.sub-title {
     display: inline-block;
-    color: var(--dominant-font-color);
+    color: var(--primary-font-color);
     text-transform: uppercase;
     font-weight: var(--heading-font-weight);
     margin-bottom: 12px;
@@ -936,7 +935,7 @@ select {
 .field-row .field-col .field-attachment {
     position: relative;
     z-index: 1;
-    border: 1px dashed var(--dominant-font-color);
+    border: 1px dashed var(--primary-font-color);
     border-radius: var(--border-radius);
     overflow: hidden;
 }
@@ -947,7 +946,7 @@ select {
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: var(--dominant-font-color);
+    background-color: var(--primary-font-color);
     opacity: 0.1;
     z-index: -1;
 }
@@ -1062,7 +1061,7 @@ body.is-loaded .preloader {
     transition: color 0.5s ease-in-out;
 }
 .mainmenu-content .main-wrap ul.menu-ul li.menu-li:hover a.menu-link {
-    color: var(--dominant-font-color);
+    color: var(--primary-font-color);
 }
 .mainmenu-content .main-wrap ul.menu-ul li.menu-li a.menu-link span.menu-title {
     position: relative;
@@ -1076,7 +1075,7 @@ body.is-loaded .preloader {
     width: 0%;
     height: 2px;
     margin: 0px auto;
-    background-color: var(--dominant-font-color);
+    background-color: var(--primary-font-color);
     -webkit-transition: width 0.5s linear;
     transition: width 0.5s linear;
 }
@@ -1107,7 +1106,7 @@ body.is-loaded .preloader {
     transition: color 0.5s ease-in-out;
 }
 .mainmenu-content .main-wrap ul.menu-ul li.menu-li .menu-dropdown.menu-sub ul.menudrop-ul li.menudrop-li:hover .menu-sublink a {
-    color: var(--dominant-font-color);
+    color: var(--primary-font-color);
 }
 .mainmenu-content .main-wrap ul.menu-ul li.menu-li .menu-dropdown.menu-sub ul.menudrop-ul li.menudrop-li .menusub-dropdown {
     top: 0;
@@ -1303,7 +1302,7 @@ body.is-loaded .preloader {
     color: var(--heading-font-color);
 }
 .footer-area .footer-list .ft-list a.ft-title[aria-expanded="true"] {
-    color: var(--dominant-font-color);
+    color: var(--primary-font-color);
 }
 .footer-area .footer-list .ft-list a.ft-title[aria-expanded="true"] span.ftmenu-icon i::before {
     content: "\f1af";
@@ -1392,7 +1391,7 @@ body.is-loaded .preloader {
 }
 .mobilemenu-content .main-wrap ul.menu-ul li.menu-li .menu-btn button[aria-expanded="true"],
 .mobilemenu-content .main-wrap ul.menu-ul li.menu-li .menu-btn button[aria-expanded="true"] + span a {
-    color: var(--dominant-font-color);
+    color: var(--primary-font-color);
 }
 .mobilemenu-content .main-wrap ul.menu-ul li.menu-li .menu-btn button[aria-expanded="true"] i::before {
     content: "\f1af";
@@ -1850,8 +1849,8 @@ label.cust-checkbox-label input.cust-checkbox:checked ~ span.cust-check {
     box-shadow: inset 0px 0px 5px rgba(var(--box-shadow-inner),var(--box-shadow-inner-opacity));
 }
 label.cust-checkbox-label input.cust-checkbox:checked ~ span.cust-check {
-    background-color: var(--dominant-font-color);
-    border-color: var(--dominant-font-color);
+    background-color: var(--primary-font-color);
+    border-color: var(--primary-font-color);
 }
 label.cust-checkbox-label span.cust-check::after {
     display: none;
@@ -1873,7 +1872,7 @@ label.cust-checkbox-label img {
     border-radius: var(--border-radius);
 }
 label.cust-checkbox-label input.cust-checkbox:checked ~ img {
-    border-color: var(--dominant-font-color);
+    border-color: var(--primary-font-color);
 }
 
 /*====================================
@@ -1905,7 +1904,7 @@ label.cust-radio-label span.cust-check {
     border-radius: 50%;
 }
 label.cust-radio-label input:checked ~ span.cust-check {
-    border-color: var(--dominant-font-color);
+    border-color: var(--primary-font-color);
 }
 label.cust-radio-label span.cust-check::after {
     display: none;
@@ -1916,7 +1915,7 @@ label.cust-radio-label span.cust-check::after {
     transform: translate(-50%, 50%);
     width: 10px;
     height: 10px;
-    background-color: var(--dominant-font-color);
+    background-color: var(--primary-font-color);
     border-radius: 50%;
 }
 label.cust-radio-label input:checked ~ span.cust-check::after {
@@ -1957,7 +1956,7 @@ label.cust-switch-label span.cust-switch-slide {
     transition: background-color 0.5s ease-in-out,border-color 0.5s ease-in-out;
 }
 label.cust-switch-label input:checked ~ span.cust-switch-slide {
-    background-color: var(--dominant-font-color);
+    background-color: var(--primary-font-color);
     border-color: var(--extra-bgcolor);
 }
 label.cust-switch-label span.cust-switch-slide::before {
@@ -1967,9 +1966,9 @@ label.cust-switch-label span.cust-switch-slide::before {
     transform: translateX(0%);
     width: 10px;
     height: 20px;
-    background-color: var(--dominant-font-color);
+    background-color: var(--primary-font-color);
     border-radius: 25px;
-    border: 1px solid var(--dominant-font-color);
+    border: 1px solid var(--primary-font-color);
     -webkit-transition: background-color 0.5s ease-in-out,transform 0.5s ease-in-out,border-color 0.5s ease-in-out;
     transition: background-color 0.5s ease-in-out,transform 0.5s ease-in-out,border-color 0.5s ease-in-out;
 }
@@ -2000,11 +1999,11 @@ label.cust-switch-label input:checked ~ span.cust-switch-slide::before {
 
 /* pagination page-link active css */
 .paginatoin-area ul.pagination-box li.page-item a.page-link:hover {
-    color: var(--dominant-font-color);
+    color: var(--primary-font-color);
 }
 .paginatoin-area ul.pagination-box li.page-item a.page-link.active {
     color: var(--extra-font-color);
-    background-color: var(--dominant-font-color);
+    background-color: var(--primary-font-color);
 }
 
 /* pagination disabled css */
@@ -2179,8 +2178,8 @@ label.cust-switch-label input:checked ~ span.cust-switch-slide::before {
 .blog-wrap .swiper-buttons button:hover,
 .insta-wrap .swiper-buttons button:hover {
     color: var(--extra-font-color);
-    background-color: var(--dominant-font-color);
-    border-color: var(--dominant-font-color);
+    background-color: var(--primary-font-color);
+    border-color: var(--primary-font-color);
 }
 @media (min-width: 576px) {
     .shop-cat-wrap .swiper-buttons button,
@@ -2286,8 +2285,8 @@ label.cust-switch-label input:checked ~ span.cust-switch-slide::before {
 .testi-wrap .swiper-dots .swiper-pagination span.swiper-pagination-bullet-active,
 .blog-wrap .swiper-dots .swiper-pagination span.swiper-pagination-bullet-active,
 .insta-wrap .swiper-dots .swiper-pagination span.swiper-pagination-bullet-active {
-    background-color: var(--dominant-font-color);
-    border-color: var(--dominant-font-color);
+    background-color: var(--primary-font-color);
+    border-color: var(--primary-font-color);
 }
 /************************************* slider-dot css end *************************************/
 
@@ -2363,7 +2362,7 @@ label.cust-switch-label input:checked ~ span.cust-switch-slide::before {
 .search-bar .search-results ul::-webkit-scrollbar-thumb:hover,
 .shop-filter-sidebar::-webkit-scrollbar-thumb:hover,
 .tce-area .ck.ck-editor__editable_inline::-webkit-scrollbar-thumb:hover {
-    background-color: var(--dominant-font-color);
+    background-color: var(--primary-font-color);
 }
 @media (min-width: 768px) {
     .quickview-modal .quickview-modal-content .quickview-info .quickview-detail-info {
@@ -2380,7 +2379,7 @@ label.cust-switch-label input:checked ~ span.cust-switch-slide::before {
         background-color: #c1c1c1;
     }
     .quickview-modal .quickview-modal-content .quickview-info .quickview-detail-info::-webkit-scrollbar-thumb:hover {
-        background-color: var(--dominant-font-color);
+        background-color: var(--primary-font-color);
     }
 }
 @media screen and (max-height: 600px) {
@@ -2403,7 +2402,7 @@ label.cust-switch-label input:checked ~ span.cust-switch-slide::before {
     }
     .mobile-menu::-webkit-scrollbar-thumb:hover,
     .cart-drawer::-webkit-scrollbar-thumb:hover {
-        background-color: var(--dominant-font-color);
+        background-color: var(--primary-font-color);
     }
 }
 /************************************* scrollbar css end *************************************/
@@ -2417,18 +2416,18 @@ label.cust-switch-label input:checked ~ span.cust-switch-slide::before {
         -webkit-transform: scaleX(0);
         transform: scaleX(0);
     } 100% {
-        -webkit-transform: scaleX(1);
-        transform: scaleX(1);
-    }
+          -webkit-transform: scaleX(1);
+          transform: scaleX(1);
+      }
 }
 @keyframes loaderProgress {
     0% {
         -webkit-transform: scaleX(0);
         transform: scaleX(0);
     } 100% {
-        -webkit-transform: scaleX(1);
-        transform: scaleX(1);
-    }
+          -webkit-transform: scaleX(1);
+          transform: scaleX(1);
+      }
 }
 
 /*====================================
@@ -2438,15 +2437,15 @@ label.cust-switch-label input:checked ~ span.cust-switch-slide::before {
     0% {
         width: 0%;
     } 100% {
-        width: 100%;
-    }
+          width: 100%;
+      }
 }
 @keyframes loaderText {
     0% {
         width: 0%;
     } 100% {
-        width: 100%;
-    }
+          width: 100%;
+      }
 }
 
 /*====================================
@@ -2487,9 +2486,9 @@ label.cust-switch-label input:checked ~ span.cust-switch-slide::before {
         opacity: 0;
         visibility: hidden;
     } 100% {
-        opacity: 1;
-        visibility: visible;
-    }
+          opacity: 1;
+          visibility: visible;
+      }
 }
 @keyframes DropDownSlide {
     0% {
@@ -2498,11 +2497,11 @@ label.cust-switch-label input:checked ~ span.cust-switch-slide::before {
         -webkit-transform: translateY(10px);
         transform: translateY(10px);
     } 100% {
-        opacity: 1;
-        visibility: visible;
-        -webkit-transform: translateY(0);
-        transform: translateY(0);
-    }
+          opacity: 1;
+          visibility: visible;
+          -webkit-transform: translateY(0);
+          transform: translateY(0);
+      }
 }
 
 /*====================================
@@ -2514,10 +2513,10 @@ label.cust-switch-label input:checked ~ span.cust-switch-slide::before {
         -webkit-transform: scale(0.1);
         transform: scale(0.1)
     } 100% {
-        opacity: 0;
-        -webkit-transform: scale(1.1);
-        transform: scale(1.1)
-    }
+          opacity: 0;
+          -webkit-transform: scale(1.1);
+          transform: scale(1.1)
+      }
 }
 @keyframes hoverEffect {
     0% {
@@ -2525,10 +2524,10 @@ label.cust-switch-label input:checked ~ span.cust-switch-slide::before {
         -webkit-transform: scale(0.5);
         transform: scale(0.5)
     } 100% {
-        opacity: 0;
-        -webkit-transform: scale(1.1);
-        transform: scale(1.1)
-    }
+          opacity: 0;
+          -webkit-transform: scale(1.1);
+          transform: scale(1.1)
+      }
 }
 
 /*====================================
@@ -2538,15 +2537,15 @@ label.cust-switch-label input:checked ~ span.cust-switch-slide::before {
     0% {
         transform: rotate(0deg);
     } 100% {
-        transform: rotate(270deg);
-    }
+          transform: rotate(270deg);
+      }
 }
 @keyframes rotator {
     0% {
         transform: rotate(0deg);
     } 100% {
-        transform: rotate(270deg);
-    }
+          transform: rotate(270deg);
+      }
 }
 
 /*====================================
@@ -2556,23 +2555,23 @@ label.cust-switch-label input:checked ~ span.cust-switch-slide::before {
     0% {
         stroke-dashoffset: 280;
     } 50% {
-        stroke-dashoffset: 75;
-        transform: rotate(135deg);
-    } 100% {
-        stroke-dashoffset: 280;
-        transform: rotate(450deg);
-    }
+          stroke-dashoffset: 75;
+          transform: rotate(135deg);
+      } 100% {
+            stroke-dashoffset: 280;
+            transform: rotate(450deg);
+        }
 }
 @keyframes dash {
     0% {
         stroke-dashoffset: 280;
     } 50% {
-        stroke-dashoffset: 75;
-        transform: rotate(135deg);
-    } 100% {
-        stroke-dashoffset: 280;
-        transform: rotate(450deg);
-    }
+          stroke-dashoffset: 75;
+          transform: rotate(135deg);
+      } 100% {
+            stroke-dashoffset: 280;
+            transform: rotate(450deg);
+        }
 }
 
 /*====================================
@@ -2587,18 +2586,18 @@ label.cust-switch-label input:checked ~ span.cust-switch-slide::before {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     } 100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+      }
 }
 @keyframes spin {
     0% {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     } 100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+      }
 }
 /************************************* keyframes css end *************************************/
 
@@ -2612,6 +2611,4 @@ label.cust-switch-label input:checked ~ span.cust-switch-slide::before {
 [data-animate].animate__animated {
     opacity: 1
 }
-
-
 /************************************* animation css end *************************************/

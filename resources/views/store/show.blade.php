@@ -8,6 +8,7 @@
 
 @push('scripts')
     <script src="{{asset('/assets/js/cart.js')}}"></script>
+    <script src="{{asset('/assets/js/theme.js')}}"></script>
 @endpush
 
 
